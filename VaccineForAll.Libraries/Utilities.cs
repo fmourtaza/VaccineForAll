@@ -25,11 +25,13 @@ namespace VaccineForAll.Libraries
             builder.Append(string.Format("<p>This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria - using the Co-WIN Public APIs, for more details about the API, <a href='https://apisetu.gov.in/public/marketplace/api/cowin' target='_blank'>click here</a></p>"));
             builder.Append(string.Format("<p>Please note that this web application <b>does NOT book any slot on your behalf whatsoever </b>- it only provides valuable information to help the citizen to select the available center at that point in time.</p>"));
             builder.Append(string.Format("<p><b><i><u>How it works:</u></i></b></p>"));
-            builder.Append(string.Format("<p style='text - indent: 50px;'>The program run in an interval to query the provided Co-WIN Public APIs to look for an available center in your respective District, taking into consideration the age and available dose. </p>"));
-            builder.Append(string.Format("<p style='text - indent: 50px;'>Once the program finds an available center, an email will be sent at the registered email address a complete report with all details which shows all the available centers along with the available dose at that point in time. </p>"));
-            builder.Append(string.Format("<p style='text - indent: 50px;'>It is important to mention that upon receiving the report, it is highly recommended to book the slots on the <a href='https://www.cowin.gov.in/home' target='_blank'>cowin.gov.in</a> website or using the Aarogya Setu mobile app.</p>"));
+            builder.Append(string.Format("<p>The program run in an interval to query the provided Co-WIN Public APIs to look for an available center in your respective District, taking into consideration the age and available dose. </p>"));
+            builder.Append(string.Format("<p>Once the program finds an available center, an email will be sent at the registered email address a complete report with all details which shows all the available centers along with the available dose at that point in time. </p>"));
+            builder.Append(string.Format("<p>It is important to mention that upon receiving the report, it is highly recommended to book the slots on the <a href='https://www.cowin.gov.in/home' target='_blank'>cowin.gov.in</a> website or using the Aarogya Setu mobile app.</p>"));
+            builder.Append(string.Format("<p><b><i><u>Direct Report Viewer</u></i></b></p>"));
+            builder.Append(string.Format("<p>Alternatively, you can view the data for a particular district at the <a href='https://vaccineforall.co.in/reportviewer.aspx' target='_blank'>Report Viewer</a> page</p>"));
             builder.Append(string.Format("<p>Best regards.</p>"));
-            builder.Append(string.Format("<p><b>VaccineForAll Team</b></p>"));
+            builder.Append(string.Format("<p><b>Mourtaza Moise Fazlehoussen</b></p>"));
 
             SendMail(citizenEmail, emailSubject, builder.ToString());
         }
@@ -64,10 +66,9 @@ namespace VaccineForAll.Libraries
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(string.Format("Dear {0}<br><br>", citizenEmail));
-            builder.Append(string.Format("<p>Your District Name: {0}</p>", district_name));
-            builder.Append(string.Format("<p>Your Age: {0}</p>", citizenAge));
-            builder.Append(string.Format("<p>Your Email: {0}</p><br><br>", citizenEmail));
-            builder.Append("<font>The following are the records: </font><br><br>");
+            builder.Append(string.Format("<p>Your district name: {0} - Your age: {1}.</p>", district_name, citizenAge));
+            builder.Append(string.Format("<p>It is important to mention that upon receiving this report, it is highly recommended to book the slots on the <a href='https://www.cowin.gov.in/home' target='_blank'>cowin.gov.in</a> website or using the Aarogya Setu mobile app.</p>"));
+            builder.Append("<font>The following are the slots availability: </font><br><br>");
             builder.Append("<table border='1px' cellpadding='5' cellspacing='0' ");
             builder.Append("style='border: solid 1px Silver; font-size: x-small;'>");
             builder.Append("<tr align='left' valign='top'>");
@@ -99,7 +100,7 @@ namespace VaccineForAll.Libraries
             {
                 HandleException(ex);
             }
-            
+
             return builder.ToString();
         }
 

@@ -29,6 +29,8 @@ namespace VaccineForAll.WebApp
 
         private void ShowSuccessMessage()
         {
+            lblMessage.Visible = true;
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", "HideLabel();", true);
             ScriptManager.RegisterStartupScript(this, GetType(), "displayalertmessage", "ShowMessage();", true);
         }
     }

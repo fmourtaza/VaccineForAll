@@ -10,7 +10,7 @@ namespace VaccineForAll.Libraries
 {
     public class OperationsCRUD
     {
-        public static int mailSentCount = 5;
+        public static int mailSentCount = 21;
 
         public static SqlConnection GetSqlConnection()
         {

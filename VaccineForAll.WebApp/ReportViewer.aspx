@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="VaccineForAll.WebApp.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReportViewer.aspx.cs" Inherits="VaccineForAll.WebApp.ReportViewer" %>
 
 <!DOCTYPE html>
 
@@ -34,16 +34,14 @@
     <script type='text/javascript' src='js/mobile.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/0.1.0/css/footable.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/0.1.0/js/footable.min.js"></script>
+
     <script src="js/Metadata.js"></script>
     <script type="text/javascript">
-        function ShowMessage() {
-            document.getElementById("email").value = "";
-            alert("Form has been submitted successfully. You shall get a Welcome Mail soon !");
-        }
-
         function HideLabel() {
-            document.getElementById("email").value = "";
-            var seconds = 7;
+            var seconds = 21;
             setTimeout(function () {
                 document.getElementById("<%=lblMessage.ClientID %>").style.display = "none";
             }, seconds * 1000);
@@ -55,10 +53,10 @@
         <div id="header">
             <h1><a href="Default.aspx">Vaccine for all! <span>Slot lookup</span></a></h1>
             <ul id="navigation">
-                <li class="current">
+                <li>
                     <a href="Default.aspx">Home</a>
                 </li>
-                <li>
+                <li  class="current">
                     <a href="ReportViewer.aspx">Report Viewer</a>
                 </li>
                 <li>
@@ -68,8 +66,8 @@
         </div>
         <div id="body">
             <div id="tagline">
-                <h1>Let's get vaccinated!</h1>
-                <p>This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria.</p>
+                <h1>Let's get vaccinated! <br />Report Viewer</h1>
+                <p>This Report Viewer page shows the current data for a particular district.</p>
                 <br />
                 <div>
                     <select id="locality-dropdown" name="locality" onchange="FillDistricts()">
@@ -81,7 +79,6 @@
                     <select id="age-dropdown" name="age" required="required">
                         <option value="">Choose Age</option>
                     </select>
-                    <input type="email" id="email" name="email" placeholder="Your email.." required="required" runat="server" />
                     <input type="submit" id="btnSubmit" value="Submit" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSubmit_ServerClick" />
                     <input type="hidden" id="selectedStateID" runat="server" />
                     <input type="hidden" id="selectedDistrictName" runat="server" />
@@ -90,13 +87,25 @@
                     <br />
                     <br />
                     <div class="alert alert-success">
-                        <asp:Label ID="lblMessage" ForeColor="Green" Font-Bold="true" Text="Form has been submitted successfully. You shall get a Welcome Mail soon !" runat="server" Visible="false" />
+                        <asp:Label ID="lblMessage" ForeColor="Green" Font-Bold="true" Text="" runat="server" />
                     </div>
                     <br />
                     <br />
                 </div>
             </div>
             <img src="images/indian-flag.jpg" alt="Indian Flag" class="figure" />
+            <asp:GridView ID="GridView1" CssClass="footable" runat="server" AutoGenerateColumns="false">
+                <Columns>
+                    <asp:BoundField DataField="session_date" HeaderText="date" />
+                    <asp:BoundField DataField="session.min_age_limit" HeaderText="min_age_limit" />
+                    <asp:BoundField DataField="session.available_capacity_dose1" HeaderText="available_capacity_dose1" />
+                    <asp:BoundField DataField="session.available_capacity_dose2" HeaderText="available_capacity_dose2" />
+                    <asp:BoundField DataField="session.vaccine" HeaderText="vaccine" />
+                    <asp:BoundField DataField="center.district_name" HeaderText="district_name" />
+                    <asp:BoundField DataField="center.address" HeaderText="address" />
+                    <asp:BoundField DataField="center.pincode" HeaderText="pincode" />
+                </Columns>
+            </asp:GridView>
         </div>
         <div id="footer">
             <div>
@@ -115,6 +124,7 @@
             Metadata.SetDropDownStates();
             SetSelectControlRequired('locality-dropdown');
             FillAge();
+            $('[id*=GridView1]').footable();
         })();
 
         function SetSelectControlRequired(controlId) {
@@ -128,8 +138,8 @@
         function FillDistricts() {
             let selectedState = document.getElementById("locality-dropdown").value;
             let url_districts = "https://cdn-api.co-vin.in/api/v2/admin/location/districts/" + selectedState;
-            Metadata.FetchData(url_districts, "districts");
             Metadata.SetDropDownDistrict();
+            Metadata.FetchData(url_districts, "districts");
             SetSelectControlRequired('district-dropdown');
         }
 

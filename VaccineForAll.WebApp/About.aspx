@@ -16,10 +16,13 @@
         <div id="header">
             <h1><a href="Default.aspx">Vaccine for all! <span>Slot lookup</span></a></h1>
             <ul id="navigation">
-                <li class="current">
+                <li>
                     <a href="Default.aspx">Home</a>
                 </li>
                 <li>
+                    <a href="ReportViewer.aspx">Report Viewer</a>
+                </li>
+                <li class="current">
                     <a href="About.aspx">About</a>
                 </li>
             </ul>
@@ -48,7 +51,7 @@
         </div>
         <div id="footer">
             <div>
-                <span>Mourtaza Moise Fazlehoussen | fmourtaza@gmail.com</span>
+                <span>Developed by <a href="mailto:fmourtaza@gmail.com" style="color: #99fa99;">Mourtaza Moise Fazlehoussen</a></span>
                 <p>
                     &copy; This project is an <a href="https://github.com/fmourtaza/VaccineForAll" target="_blank" style="color: white;">Open Source</a> &amp; licensed under the MIT License.
                 </p>

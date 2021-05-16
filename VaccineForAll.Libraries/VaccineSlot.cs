@@ -37,7 +37,7 @@ namespace VaccineForAll.Libraries
                             Console.WriteLine(string.Format(" == Processing data for citizenEmail:{0} - district_name:{1} - citizenAge:{2}.", citizenEmail, district_name, citizenAge));
 
                             //Fetch data
-                            DataTable appoitmentData = LookupConsecutiveDays(district_id, citizenEmail, citizenAge);
+                            DataTable appoitmentData = LookupConsecutiveDays(district_id, citizenAge);
                             if (appoitmentData.Rows.Count > 0)
                             {
                                 Console.WriteLine(String.Format("  = Rows.Count:{0}", appoitmentData.Rows.Count));
@@ -76,7 +76,7 @@ namespace VaccineForAll.Libraries
         /// <param name="citizenEmail"></param>
         /// <param name="citizenAge"></param>
         /// <returns></returns>
-        public DataTable LookupConsecutiveDays(String district_id, String citizenEmail, int citizenAge)
+        public DataTable LookupConsecutiveDays(String district_id, int citizenAge)
         {
             DataTable appointmentDataTable = CreateDataTable();
             for (int i = 1; i <= dayCount; i++)
@@ -166,5 +166,26 @@ namespace VaccineForAll.Libraries
             return dt;
         }
 
+        /// <summary>
+        /// Show report on the web page itself
+        /// </summary>
+        /// <param name="district_id"></param>
+        /// <param name="district_name"></param>
+        /// <param name="citizenAge"></param>
+        /// <returns></returns>
+        public DataTable ReportViewer(String district_id, String district_name, int citizenAge)
+        {
+            try
+            {
+                //Fetch data
+                return LookupConsecutiveDays(district_id, citizenAge);
+            }
+            catch (Exception ex)
+            {
+                Utilities.HandleException(ex);
+            }
+
+            return null;
+        }
     }
 }

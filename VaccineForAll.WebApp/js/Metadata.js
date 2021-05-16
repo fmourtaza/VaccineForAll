@@ -73,11 +73,11 @@
                 Metadata.FillStatesValues(obj[k]);
             } else {
                 let IsExist = document.getElementById('locality-dropdown').querySelector('[value="' + obj["state_id"] + '"]');
-                console.log(IsExist);
+                //console.log(IsExist);
                 if (IsExist == null && obj["state_id"] != undefined) {
                     let dropdown = document.getElementById('locality-dropdown');
                     let option;
-                    console.log('State: ' + obj["state_name"] + ' - ' + obj["state_id"]);
+                    //console.log('State: ' + obj["state_name"] + ' - ' + obj["state_id"]);
                     option = document.createElement('option');
                     option.text = obj["state_name"];
                     option.value = obj["state_id"];
@@ -93,11 +93,11 @@
                 Metadata.FillDistrictsValues(obj[k]);
             } else {
                 let IsExist = document.getElementById('district-dropdown').querySelector('[value="' + obj["district_id"] + '"]');
-                console.log(IsExist);
+                //console.log(IsExist);
                 if (IsExist == null && obj["district_id"] != undefined) {
                     let dropdown = document.getElementById('district-dropdown');
                     let option;
-                    console.log('State: ' + obj["district_name"] + ' - ' + obj["district_id"]);
+                    //console.log('State: ' + obj["district_name"] + ' - ' + obj["district_id"]);
                     option = document.createElement('option');
                     option.text = obj["district_name"];
                     option.value = obj["district_id"];

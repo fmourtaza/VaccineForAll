@@ -9,8 +9,11 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.Credentials.cs
+
+# ignore a single file
+Credentials.class
 Credentials.cs
+*.Credentials.cs
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
