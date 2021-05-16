@@ -7,6 +7,28 @@
     <title>Vaccine for All</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=0, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria.">
+    <meta name="viewport" content="width=devfe-width, initial-scale=1">
+    <link rel="canonical" href="https://vaccineforall.co.in/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="VaccineForAll" />
+    <meta property="og:description" content="This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria." />
+    <meta property="og:url" content="https://vaccineforall.co.in/" />
+    <meta property="og:site_name" content="VaccineForAll" />
+    <meta property="og:image" itemprop="image" content="/images/vaccine.jpg">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content="This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria." data-react-helmet="true" />
+    <meta name="twitter:title" content="VaccineForAll" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="robots" content="NOODP">
+    <meta name="theme-color" content="#eeeeee">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="VaccineForAll">
+    <meta name="google" content="notranslate">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/mobile.css">
     <script type='text/javascript' src='js/mobile.js'></script>
@@ -64,7 +86,7 @@
             <div>
                 <span>Mourtaza Moise Fazlehoussen | fmourtaza@gmail.com</span>
                 <p>
-                    &copy; This project is an Open Source&amp; is licensed under the MIT License.
+                    &copy; This project is an <a href="https://github.com/fmourtaza/VaccineForAll" target="_blank" style="color:white;">Open Source</a> &amp; licensed under the MIT License.
                 </p>
             </div>
         </div>

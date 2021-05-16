@@ -50,7 +50,7 @@
             <div>
                 <span>Mourtaza Moise Fazlehoussen | fmourtaza@gmail.com</span>
                 <p>
-                    &copy; This project is an Open Source&amp; is licensed under the MIT License.
+                    &copy; This project is an <a href="https://github.com/fmourtaza/VaccineForAll" target="_blank" style="color: white;">Open Source</a> &amp; licensed under the MIT License.
                 </p>
             </div>
         </div>

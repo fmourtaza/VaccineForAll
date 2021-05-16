@@ -130,6 +130,7 @@
     <Content Include="images\mobile\mobile-collapse.png" />
     <Content Include="images\mobile\mobile-expand.png" />
     <Content Include="images\mobile\mobile-menu.png" />
+    <Content Include="images\vaccine.jpg" />
     <Content Include="images\yoga-concentrating.jpg" />
     <Content Include="js\function.js" />
     <Content Include="js\jquery-1.11.1.min.js" />
