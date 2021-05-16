@@ -1,0 +1,6 @@
+﻿{
+  "$schema": "http://schemastore.org/schemas/json/webjob-publish-settings.json",
+  "webJobName": "VaccineForAll",
+  "runMode": "Scheduled",
+  "schedule": "0 0 * * * *"
+}
