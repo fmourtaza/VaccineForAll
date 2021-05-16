@@ -12,8 +12,8 @@ namespace VaccineForAll.Libraries
         public static string SqlUserID = "";
         public static string SqlPassword = "";
         public static string SqlInitialCatalog = "";
-        public static string MailSmtp = "";
-        public static int MailPort = 0;
+        public static string MailSmtp = "smtp.gmail.com";
+        public static int MailPort = 587;
         public static string MailUserName = "";
         public static string MailPassword = "";
     }
