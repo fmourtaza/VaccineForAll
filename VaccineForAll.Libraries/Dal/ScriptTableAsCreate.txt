@@ -1,0 +1,24 @@
+﻿/****** Object:  Table [dbo].[CitizenData]    Script Date: 16-05-2021 16:07:21 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CitizenData](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[CitizenEmail] [nvarchar](50) NOT NULL,
+	[CitizenDistrictID] [nvarchar](10) NOT NULL,
+	[CitizenDistrictName] [nvarchar](50) NOT NULL,
+	[CitizenConfirmedSlotMailSentCount] [int] NOT NULL,
+	[DateInserted] [datetime] NOT NULL,
+	[CitizenAge] [nvarchar](5) NULL,
+ CONSTRAINT [PK_CitizenData] PRIMARY KEY CLUSTERED 
+(
+	[CitizenEmail] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[CitizenData] ADD  DEFAULT (getdate()) FOR [DateInserted]
+GO
