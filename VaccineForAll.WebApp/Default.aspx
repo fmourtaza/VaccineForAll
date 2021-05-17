@@ -81,12 +81,19 @@
                     <select id="age-dropdown" name="age" required="required">
                         <option value="">Choose Age</option>
                     </select>
+                    <select id="dose-dropdown" name="dose" required="required">
+                        <option value="">Choose Dose</option>
+                        <option value="dose1">Dose 1</option>
+                        <option value="dose2">Dose 2</option>
+                        <option value="both">Both</option>
+                    </select>
                     <input type="email" id="email" name="email" placeholder="Your email.." required="required" runat="server" />
                     <input type="submit" id="btnSubmit" value="Submit" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSubmit_ServerClick" />
                     <input type="hidden" id="selectedStateID" runat="server" />
                     <input type="hidden" id="selectedDistrictName" runat="server" />
                     <input type="hidden" id="selectedDistrictID" runat="server" />
                     <input type="hidden" id="selectedAge" runat="server" />
+                    <input type="hidden" id="selectedDose" runat="server" />
                     <br />
                     <br />
                     <div class="alert alert-success">
@@ -148,15 +155,15 @@
             let selectedStateID = document.getElementById("locality-dropdown").value;
             let selectedDistrictID = document.getElementById("district-dropdown").value;
             let selectedAge = document.getElementById("age-dropdown").value;
+            let selectedDose = document.getElementById("dose-dropdown").value;
             let selText = document.getElementById("district-dropdown");
             let selectedDistrictName = selText.options[selText.selectedIndex].text;
             document.getElementById("selectedStateID").value = selectedStateID;
             document.getElementById("selectedDistrictID").value = selectedDistrictID;
             document.getElementById("selectedDistrictName").value = selectedDistrictName;
             document.getElementById("selectedAge").value = selectedAge;
+            document.getElementById("selectedDose").value = selectedDose;
         }
-
-
     </script>
 </body>
 </html>

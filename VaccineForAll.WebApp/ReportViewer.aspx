@@ -56,7 +56,7 @@
                 <li>
                     <a href="Default.aspx">Home</a>
                 </li>
-                <li  class="current">
+                <li class="current">
                     <a href="ReportViewer.aspx">Report Viewer</a>
                 </li>
                 <li>
@@ -66,7 +66,9 @@
         </div>
         <div id="body">
             <div id="tagline">
-                <h1>Let's get vaccinated! <br />Report Viewer</h1>
+                <h1>Let's get vaccinated!
+                    <br />
+                    Report Viewer</h1>
                 <p>This Report Viewer page shows the current data for a particular district.</p>
                 <br />
                 <div>
@@ -79,11 +81,18 @@
                     <select id="age-dropdown" name="age" required="required">
                         <option value="">Choose Age</option>
                     </select>
+                    <select id="dose-dropdown" name="dose" required="required">
+                        <option value="">Choose Dose</option>
+                        <option value="dose1">Dose 1</option>
+                        <option value="dose2">Dose 2</option>
+                        <option value="doseBoth">Both</option>
+                    </select>
                     <input type="submit" id="btnSubmit" value="Submit" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSubmit_ServerClick" />
                     <input type="hidden" id="selectedStateID" runat="server" />
                     <input type="hidden" id="selectedDistrictName" runat="server" />
                     <input type="hidden" id="selectedDistrictID" runat="server" />
                     <input type="hidden" id="selectedAge" runat="server" />
+                    <input type="hidden" id="selectedDose" runat="server" />
                     <br />
                     <br />
                     <div class="alert alert-success">
@@ -158,12 +167,14 @@
             let selectedStateID = document.getElementById("locality-dropdown").value;
             let selectedDistrictID = document.getElementById("district-dropdown").value;
             let selectedAge = document.getElementById("age-dropdown").value;
+            let selectedDose = document.getElementById("dose-dropdown").value;
             let selText = document.getElementById("district-dropdown");
             let selectedDistrictName = selText.options[selText.selectedIndex].text;
             document.getElementById("selectedStateID").value = selectedStateID;
             document.getElementById("selectedDistrictID").value = selectedDistrictID;
             document.getElementById("selectedDistrictName").value = selectedDistrictName;
             document.getElementById("selectedAge").value = selectedAge;
+            document.getElementById("selectedDose").value = selectedDose;
         }
 
 

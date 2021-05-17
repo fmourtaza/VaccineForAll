@@ -10,7 +10,7 @@ namespace VaccineForAll.Libraries
 {
     public class OperationsCRUD
     {
-        public static int mailSentCount = 21;
+        public static int mailSentCount = 70;
 
         public static SqlConnection GetSqlConnection()
         {
@@ -75,13 +75,15 @@ namespace VaccineForAll.Libraries
                                          ,[CitizenDistrictID]
                                          ,[CitizenDistrictName]
                                          ,[CitizenAge]
-                                         ,[CitizenConfirmedSlotMailSentCount])
+                                         ,[CitizenConfirmedSlotMailSentCount]
+                                         ,[CitizenDoseChoice])
                                 VALUES
                                           (@CitizenEmail
                                           ,@CitizenDistrictID
                                           ,@CitizenDistrictName
                                           ,@CitizenAge
-                                          ,@CitizenConfirmedSlotMailSentCount)";
+                                          ,@CitizenConfirmedSlotMailSentCount
+                                          ,@CitizenDoseChoice)";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
@@ -91,6 +93,7 @@ namespace VaccineForAll.Libraries
             cmd.Parameters.AddWithValue("@CitizenDistrictName", citizen.CitizenDistrictName);
             cmd.Parameters.AddWithValue("@CitizenAge", citizen.CitizenAge);
             cmd.Parameters.AddWithValue("@CitizenConfirmedSlotMailSentCount", 0);
+            cmd.Parameters.AddWithValue("@CitizenDoseChoice", citizen.CitizenDoseChoice);
 
             try
             {
@@ -118,7 +121,7 @@ namespace VaccineForAll.Libraries
                                     ,[CitizenDistrictID] = @CitizenDistrictID
                                     ,[CitizenDistrictName] = @CitizenDistrictName
                                     ,[CitizenAge] = @CitizenAge
-                                    ,[CitizenConfirmedSlotMailSentCount] = @CitizenConfirmedSlotMailSentCount
+                                    ,[CitizenDoseChoice] = @CitizenDoseChoice
                                WHERE [CitizenEmail] = @CitizenEmail";
 
             SqlCommand cmd = new SqlCommand(query, connection);
@@ -128,7 +131,7 @@ namespace VaccineForAll.Libraries
             cmd.Parameters.AddWithValue("@CitizenDistrictID", citizen.CitizenDistrictID);
             cmd.Parameters.AddWithValue("@CitizenDistrictName", citizen.CitizenDistrictName);
             cmd.Parameters.AddWithValue("@CitizenAge", citizen.CitizenAge);
-            cmd.Parameters.AddWithValue("@CitizenConfirmedSlotMailSentCount", 0);
+            cmd.Parameters.AddWithValue("@CitizenDoseChoice", citizen.CitizenDoseChoice);
 
             try
             {
@@ -179,12 +182,13 @@ namespace VaccineForAll.Libraries
         {
             SqlConnection connection = null;
             int citizenConfirmedSlotMailSentCount = 0;
+            int citizenDailyMailSentCount = 0;
 
             #region //Get last count
             try
             {
                 connection = GetSqlConnection();
-                String query = @"SELECT [CitizenConfirmedSlotMailSentCount] FROM [dbo].[CitizenData] WHERE([CitizenEmail] = @CitizenEmail)";
+                String query = @"SELECT [CitizenConfirmedSlotMailSentCount],[CitizenDailyMailSentCount] FROM [dbo].[CitizenData] WHERE([CitizenEmail] = @CitizenEmail)";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
                 connection.Open();
@@ -195,6 +199,7 @@ namespace VaccineForAll.Libraries
                     while (reader.Read())
                     {
                         citizenConfirmedSlotMailSentCount = Convert.ToInt32(reader["CitizenConfirmedSlotMailSentCount"]);
+                        citizenDailyMailSentCount = Convert.ToInt32(reader["CitizenDailyMailSentCount"]);
                     }
                 }
             }
@@ -214,14 +219,53 @@ namespace VaccineForAll.Libraries
 
                 connection = GetSqlConnection();
                 String queryUpdate = @"UPDATE [dbo].[CitizenData] 
-                                             SET  [CitizenConfirmedSlotMailSentCount] = @CitizenConfirmedSlotMailSentCount
+                                             SET  [CitizenConfirmedSlotMailSentCount] = @CitizenConfirmedSlotMailSentCount,
+                                                  [CitizenDailyMailSentCount] = @CitizenDailyMailSentCount
                                             WHERE [CitizenEmail] = @CitizenEmail";
                 citizenConfirmedSlotMailSentCount = citizenConfirmedSlotMailSentCount + 1;
+                citizenDailyMailSentCount = citizenDailyMailSentCount + 1;
                 SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
                 cmdUpdate.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
                 cmdUpdate.Parameters.AddWithValue("@CitizenConfirmedSlotMailSentCount", citizenConfirmedSlotMailSentCount);
+                cmdUpdate.Parameters.AddWithValue("@CitizenDailyMailSentCount", citizenDailyMailSentCount);
                 connection.Open();
                 return cmdUpdate.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Utilities.HandleException(ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
+
+            return 0;
+        }
+
+        public static int ReadDataNoDailyMailSentCount(String citizenEmail)
+        {
+            SqlConnection connection = null;
+            int citizenDailyMailSentCount = 0;
+
+            #region //Get last count
+            try
+            {
+                connection = GetSqlConnection();
+                String query = @"SELECT [CitizenDailyMailSentCount] FROM [dbo].[CitizenData] WHERE([CitizenEmail] = @CitizenEmail)";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+
+                    while (reader.Read())
+                    {
+                        citizenDailyMailSentCount = Convert.ToInt32(reader["CitizenDailyMailSentCount"]);
+                    }
+                }
             }
             catch (Exception ex)
             {

@@ -9,7 +9,7 @@ namespace VaccineForAll.Libraries
 {
     public class WebApi
     {
-        public static string Get(String url)
+        public string Get(String url)
         {
             try
             {

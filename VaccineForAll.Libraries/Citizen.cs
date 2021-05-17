@@ -12,17 +12,19 @@ namespace VaccineForAll.Libraries
         public string CitizenDistrictID { get; set; }
         public string CitizenDistrictName { get; set; }
         public string CitizenAge { get; set; }
+        public string CitizenDoseChoice { get; set; }
 
         public Citizen()
         {
         }
 
-        public Citizen(String citizenEmail, String citizenDistrictID, String citizenDistrictName, String citizenAge)
+        public Citizen(String citizenEmail, String citizenDistrictID, String citizenDistrictName, String citizenAge, String citizenDoseChoice)
         {
             CitizenEmail = citizenEmail;
             CitizenDistrictID = citizenDistrictID;
             CitizenDistrictName = citizenDistrictName;
             CitizenAge = citizenAge;
+            CitizenDoseChoice = citizenDoseChoice;
         }
     }
 }

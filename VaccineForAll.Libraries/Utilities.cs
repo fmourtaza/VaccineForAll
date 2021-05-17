@@ -17,6 +17,18 @@ namespace VaccineForAll.Libraries
             SendMail("fmourtaza@gmail.com", "VaccineForAll Exception", ex.Message + ex.StackTrace);
         }
 
+        public static void SendNoDailyMailCount(String citizenEmail, String emailSubject, String district_Name, int citizenAge, String citizenDoseChoice)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(string.Format("<p>Hello {0},</p>", citizenEmail));
+            builder.Append(string.Format("<p>The program has not yet found any data for the following critera - [District Name: {0} - Age: {1} - Dose: {2}].</p>", district_Name, citizenAge, citizenDoseChoice));
+            builder.Append(string.Format("<p>The program runs in an intervals and once the available slots are found, we will inform you accordingly</p>"));
+            builder.Append(string.Format("<p>Best regards.</p>"));
+            builder.Append(string.Format("<p><b>VaccineForAll</b></p>"));
+
+            SendMail(citizenEmail, emailSubject, builder.ToString());
+        }
+
         public static void SendWelcomeMail(String citizenEmail, String emailSubject)
         {
             StringBuilder builder = new StringBuilder();
@@ -31,7 +43,7 @@ namespace VaccineForAll.Libraries
             builder.Append(string.Format("<p><b><i><u>Direct Report Viewer</u></i></b></p>"));
             builder.Append(string.Format("<p>Alternatively, you can view the data for a particular district at the <a href='https://vaccineforall.co.in/reportviewer.aspx' target='_blank'>Report Viewer</a> page</p>"));
             builder.Append(string.Format("<p>Best regards.</p>"));
-            builder.Append(string.Format("<p><b>Mourtaza Moise Fazlehoussen</b></p>"));
+            builder.Append(string.Format("<p><b>VaccineForAll</b></p>"));
 
             SendMail(citizenEmail, emailSubject, builder.ToString());
         }
@@ -62,11 +74,11 @@ namespace VaccineForAll.Libraries
             return true;
         }
 
-        public static string toHTML_Table(DataTable dt, String citizenEmail, int citizenAge, String district_name)
+        public static string toHTML_Table(DataTable dt, String citizenEmail, int citizenAge, String district_name, String citizenDoseChoice)
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(string.Format("Dear {0}<br><br>", citizenEmail));
-            builder.Append(string.Format("<p>Your district name: {0} - Your age: {1}.</p>", district_name, citizenAge));
+            builder.Append(string.Format("<p>Your district name: {0} - Your age: {1} - Your dose choice: {2}.</p>", district_name, citizenAge, citizenDoseChoice));
             builder.Append(string.Format("<p>It is important to mention that upon receiving this report, it is highly recommended to book the slots on the <a href='https://www.cowin.gov.in/home' target='_blank'>cowin.gov.in</a> website or using the Aarogya Setu mobile app.</p>"));
             builder.Append("<font>The following are the slots availability: </font><br><br>");
             builder.Append("<table border='1px' cellpadding='5' cellspacing='0' ");

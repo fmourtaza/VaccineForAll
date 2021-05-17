@@ -28,8 +28,9 @@ namespace VaccineForAll.WebApp
             String citizendistrictID = selectedDistrictID.Value;
             String citizendistrictName = selectedDistrictName.Value;
             int citizenAge = Convert.ToInt32(selectedAge.Value);
+            String citizenDoseChoice = selectedDose.Value;
             VaccineSlot vaccineSlot = new VaccineSlot();
-            DataTable appoitmentData = vaccineSlot.ReportViewer(citizendistrictID, citizendistrictName, citizenAge);
+            DataTable appoitmentData = vaccineSlot.ReportViewer(citizendistrictID, citizendistrictName, citizenAge, citizenDoseChoice);
             if (appoitmentData != null && appoitmentData.Rows.Count > 0)
             {
                 //Sort data
@@ -48,21 +49,23 @@ namespace VaccineForAll.WebApp
                 GridView1.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
                 //Adds THEAD and TBODY to GridView.
                 GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
-                ShowSuccessMessage(citizendistrictName, citizenAge);
+                ShowSuccessMessage(citizendistrictName, citizenAge, citizenDoseChoice);
             }
             else
-                ShowNoDataMessage(citizendistrictName, citizenAge);
+                ShowNoDataMessage(citizendistrictName, citizenAge, citizenDoseChoice);
         }
 
-        private void ShowSuccessMessage(String citizendistrictName, int citizenAge)
+        private void ShowSuccessMessage(String citizendistrictName, int citizenAge, String citizenDoseChoice)
         {
-            lblMessage.Text = string.Format("Report generated successfully for [District: {0} & Age: {1}] - at timestamp: {2}.", citizendistrictName, citizenAge, DateTime.Now);
+            var istDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
+            lblMessage.Text = string.Format("Report generated successfully for [District: {0} - Age: {1} - Dose: {2}] <br>at timestamp: {3}.", citizendistrictName, citizenAge, citizenDoseChoice, istDateTime.ToString("F"));
             ClientScript.RegisterStartupScript(this.GetType(), "alert", "HideLabel();", true);
         }
 
-        private void ShowNoDataMessage(String citizendistrictName, int citizenAge)
+        private void ShowNoDataMessage(String citizendistrictName, int citizenAge, String citizenDoseChoice)
         {
-            lblMessage.Text = string.Format("No data to show for [District: {0} & Age: {1}] - at timestamp: {2}.", citizendistrictName, citizenAge, DateTime.Now);
+            var istDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
+            lblMessage.Text = string.Format("No data to show for [District: {0} - Age: {1} - Dose: {2}] <br>at timestamp: {3}.", citizendistrictName, citizenAge, citizenDoseChoice, istDateTime.ToString("F"));
             ClientScript.RegisterStartupScript(this.GetType(), "alert", "HideLabel();", true);
         }
 
