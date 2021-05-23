@@ -7,18 +7,19 @@
     <title>Vaccine for All</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=0, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria.">
+    <meta name="description" content="This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost.">
     <meta name="viewport" content="width=devfe-width, initial-scale=1">
     <link rel="canonical" href="https://vaccineforall.co.in/" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="VaccineForAll" />
-    <meta property="og:description" content="This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria." />
+    <meta property="og:description" content="This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost." />
     <meta property="og:url" content="https://vaccineforall.co.in/" />
     <meta property="og:site_name" content="VaccineForAll" />
     <meta property="og:image" itemprop="image" content="/images/vaccine.jpg">
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:description" content="This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria." data-react-helmet="true" />
+    <meta name="twitter:description" content="This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost." data-react-helmet="true" />
     <meta name="twitter:title" content="VaccineForAll" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
@@ -46,10 +47,53 @@
                 document.getElementById("<%=lblMessage.ClientID %>").style.display = "none";
             }, seconds * 1000);
         };
+
+        function ShowSearchHideLabel() {
+            document.getElementById("txtSearch").style.display = "block";
+            document.getElementById("lblSaveSelection").style.cssText = "display: block; float: left";
+            document.getElementById("chkSaveSelection").style.display = "block";
+            HideLabel();
+        };
+
+        function ShowMessageOnSubmit() {
+            alert("Form has been submitted successfully. You shall get a Welcome Mail soon !");
+            HideLabel();
+        }
+
+        function ShowSaveSelectionControls() {
+            var chkSaveSelection = document.getElementById("chkSaveSelection").checked;
+            if (chkSaveSelection == true) {
+                document.getElementById("email").style.display = "block";
+                document.getElementById("email").required = true;
+                document.getElementById("email").value = "";
+                document.getElementById("btnSubmit").style.display = "inline";
+            }
+            else {
+                document.getElementById("email").style.display = "none";
+                document.getElementById("email").required = false;
+                document.getElementById("btnSubmit").style.display = "none";
+            }
+        };
+
+        function ResetControlValues() {
+            document.getElementById("<%=lblMessage.ClientID %>").style.display = "none";
+            document.getElementById("locality-dropdown").selectedIndex = "0";
+            document.getElementById("district-dropdown").selectedIndex = "0";
+            document.getElementById("age-dropdown").selectedIndex = "0";
+            document.getElementById("dose-dropdown").selectedIndex = "0";
+            document.getElementById('<%= GridView1.ClientID%>').innerText = null;
+            document.getElementById("txtSearch").style.display = "none";
+            document.getElementById("email").style.display = "none";
+            document.getElementById("btnSubmit").style.display = "none";
+            document.getElementById("lblSaveSelection").style.display = "none";
+            document.getElementById("chkSaveSelection").style.display = "none";
+            document.getElementById("chkSaveSelection").checked = false;
+        }
     </script>
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <div id="header">
             <h1><a href="Default.aspx">Vaccine for all! <span>Slot lookup</span></a></h1>
             <ul id="navigation">
@@ -65,6 +109,7 @@
             </ul>
         </div>
         <div id="body">
+
             <div id="tagline">
                 <h1>Let's get vaccinated!
                     <br />
@@ -87,34 +132,54 @@
                         <option value="dose2">Dose 2</option>
                         <option value="doseBoth">Both</option>
                     </select>
-                    <input type="submit" id="btnSubmit" value="Submit" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSubmit_ServerClick" />
+                    <input type="email" id="email" name="email" placeholder="Your email" runat="server" style="display: none;" />
+                    <input type="submit" id="btnSearch" value="Search" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSearch_ServerClick" />
+                    <input type="submit" id="btnReset" value="Reset" runat="server" onclick="ResetControlValues(); return false;" />
+                    <input type="submit" id="btnSubmit" value="Submit" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSubmit_ServerClick" style="display: none;" />
+                    <br />
+                    <br />
+                    <div style="margin-top: 10px; margin-bottom: 20px;">
+                        <label id="lblSaveSelection" for="chkSaveSelection" style="display: none; float: left">Save this selection to get updates on your email?    </label>
+                        <input type="checkbox" name="chkSaveSelection" id="chkSaveSelection" onchange="ShowSaveSelectionControls();" style="display: none;" />
+                    </div>
+                    <input type="text" id="txtSearch" name="Search" placeholder="Search within table" onkeyup="Search_Gridview(this, 'GridView1')" style="display: none;" runat="server" />
                     <input type="hidden" id="selectedStateID" runat="server" />
                     <input type="hidden" id="selectedDistrictName" runat="server" />
                     <input type="hidden" id="selectedDistrictID" runat="server" />
                     <input type="hidden" id="selectedAge" runat="server" />
                     <input type="hidden" id="selectedDose" runat="server" />
-                    <br />
-                    <br />
-                    <div class="alert alert-success">
-                        <asp:Label ID="lblMessage" ForeColor="Green" Font-Bold="true" Text="" runat="server" />
-                    </div>
-                    <br />
-                    <br />
                 </div>
             </div>
             <img src="images/indian-flag.jpg" alt="Indian Flag" class="figure" />
-            <asp:GridView ID="GridView1" CssClass="footable" runat="server" AutoGenerateColumns="false">
-                <Columns>
-                    <asp:BoundField DataField="session_date" HeaderText="date" />
-                    <asp:BoundField DataField="session.min_age_limit" HeaderText="min_age_limit" />
-                    <asp:BoundField DataField="session.available_capacity_dose1" HeaderText="available_capacity_dose1" />
-                    <asp:BoundField DataField="session.available_capacity_dose2" HeaderText="available_capacity_dose2" />
-                    <asp:BoundField DataField="session.vaccine" HeaderText="vaccine" />
-                    <asp:BoundField DataField="center.district_name" HeaderText="district_name" />
-                    <asp:BoundField DataField="center.address" HeaderText="address" />
-                    <asp:BoundField DataField="center.pincode" HeaderText="pincode" />
-                </Columns>
-            </asp:GridView>
+            <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="ServerClick" />
+                    <asp:AsyncPostBackTrigger ControlID="btnSubmit" EventName="ServerClick" />
+                    <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="Sorting" />
+                    <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="PreRender" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="alert alert-success" style="float: left">
+                        <asp:Label ID="lblMessage" ForeColor="Green" Font-Bold="true" Text="" runat="server" />
+                        <br />
+                        <br />
+                    </div>
+                    <asp:GridView ID="GridView1" CssClass="footable" runat="server" AutoGenerateColumns="false" AllowSorting="true"
+                        OnSorting="GridView1_Sorting" OnPreRender="GridView1_PreRender">
+                        <Columns>
+                            <asp:BoundField SortExpression="session_date" DataField="session_date" HeaderText="date" />
+                            <asp:BoundField SortExpression="session.min_age_limit" DataField="session.min_age_limit" HeaderText="min_age_limit" />
+                            <asp:BoundField SortExpression="session.available_capacity_dose1" DataField="session.available_capacity_dose1" HeaderText="dose1" />
+                            <asp:BoundField SortExpression="session.available_capacity_dose2" DataField="session.available_capacity_dose2" HeaderText="dose2" />
+                            <asp:BoundField SortExpression="session.vaccine" DataField="session.vaccine" HeaderText="vaccine" />
+                            <asp:BoundField SortExpression="center.vaccine_fees" DataField="center.vaccine_fees" HeaderText="fees" />
+                            <asp:BoundField SortExpression="center.district_name" DataField="center.district_name" HeaderText="district_name" />
+                            <asp:BoundField SortExpression="center.address" DataField="center.address" HeaderText="address" />
+                            <asp:BoundField SortExpression="center.pincode" DataField="center.pincode" HeaderText="pincode" />
+                        </Columns>
+                    </asp:GridView>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
         <div id="footer">
             <div>
@@ -135,6 +200,17 @@
             FillAge();
             $('[id*=GridView1]').footable();
         })();
+
+        //Re-Create for on page postbacks
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        prm.add_endRequest(function () {
+            $('[id*=GridView1]').footable();
+        });
+
+        function SetFootable() {
+            $('[id*=GridView1]').footable();
+            $('[id*=GridView1]').setAttribute("data-class", "expand");
+        }
 
         function SetSelectControlRequired(controlId) {
             let dropdown = document.getElementById(controlId);
@@ -177,7 +253,24 @@
             document.getElementById("selectedDose").value = selectedDose;
         }
 
-
+        function Search_Gridview(strKey, strGV) {
+            var strData = strKey.value.toLowerCase().split(" ");
+            var tblData = document.getElementById(strGV);
+            var rowData;
+            for (var i = 1; i < tblData.rows.length; i++) {
+                rowData = tblData.rows[i].innerHTML;
+                var styleDisplay = 'none';
+                for (var j = 0; j < strData.length; j++) {
+                    if (rowData.toLowerCase().indexOf(strData[j]) >= 0)
+                        styleDisplay = '';
+                    else {
+                        styleDisplay = 'none';
+                        break;
+                    }
+                }
+                tblData.rows[i].style.display = styleDisplay;
+            }
+        }
     </script>
 </body>
 </html>

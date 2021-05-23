@@ -111,6 +111,10 @@
     <Content Include="fonts\lato-regular-webfont.svg" />
     <Content Include="fonts\nixieone-regular-webfont.svg" />
     <Content Include="images\bg-separator.png" />
+    <Content Include="images\favicon-16x16.png" />
+    <Content Include="images\favicon-32x32.png" />
+    <Content Include="images\favicon-96x96.png" />
+    <Content Include="images\favicon.ico" />
     <Content Include="images\group-yoga.jpg" />
     <Content Include="images\icon-facebook.png" />
     <Content Include="images\icon-googleplus.png" />

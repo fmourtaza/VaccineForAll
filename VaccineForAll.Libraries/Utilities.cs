@@ -17,31 +17,33 @@ namespace VaccineForAll.Libraries
             SendMail("fmourtaza@gmail.com", "VaccineForAll Exception", ex.Message + ex.StackTrace);
         }
 
-        public static void SendNoDailyMailCount(String citizenEmail, String emailSubject, String district_Name, int citizenAge, String citizenDoseChoice)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(string.Format("<p>Hello {0},</p>", citizenEmail));
-            builder.Append(string.Format("<p>The program has not yet found any data for the following critera - [District Name: {0} - Age: {1} - Dose: {2}].</p>", district_Name, citizenAge, citizenDoseChoice));
-            builder.Append(string.Format("<p>The program runs in an intervals and once the available slots are found, we will inform you accordingly</p>"));
-            builder.Append(string.Format("<p>Best regards.</p>"));
-            builder.Append(string.Format("<p><b>VaccineForAll</b></p>"));
-
-            SendMail(citizenEmail, emailSubject, builder.ToString());
-        }
-
         public static void SendWelcomeMail(String citizenEmail, String emailSubject)
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(string.Format("<p>Dear {0},</p>", citizenEmail));
             builder.Append(string.Format("<p>Thanks for registering with us!</p>"));
-            builder.Append(string.Format("<p>This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria - using the Co-WIN Public APIs, for more details about the API, <a href='https://apisetu.gov.in/public/marketplace/api/cowin' target='_blank'>click here</a></p>"));
+            builder.Append(string.Format("<p>This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost.</p>"));
+            builder.Append(string.Format("<p>«<b><i>We believe that it is everyone's social responsibility to keep each other safe! </i></b>»</p>"));
             builder.Append(string.Format("<p>Please note that this web application <b>does NOT book any slot on your behalf whatsoever </b>- it only provides valuable information to help the citizen to select the available center at that point in time.</p>"));
             builder.Append(string.Format("<p><b><i><u>How it works:</u></i></b></p>"));
-            builder.Append(string.Format("<p>The program run in an interval to query the provided Co-WIN Public APIs to look for an available center in your respective District, taking into consideration the age and available dose. </p>"));
+            builder.Append(string.Format("<p>The program run in an interval from 6 AM to 8 PM to query the provided Co-WIN Public APIs to look for an available center in your respective District, taking into consideration the age and available dose, for more details about the API, <a href='https://apisetu.gov.in/public/marketplace/api/cowin' target='_blank'>click here.</a></p>"));
             builder.Append(string.Format("<p>Once the program finds an available center, an email will be sent at the registered email address a complete report with all details which shows all the available centers along with the available dose at that point in time. </p>"));
             builder.Append(string.Format("<p>It is important to mention that upon receiving the report, it is highly recommended to book the slots on the <a href='https://www.cowin.gov.in/home' target='_blank'>cowin.gov.in</a> website or using the Aarogya Setu mobile app.</p>"));
             builder.Append(string.Format("<p><b><i><u>Direct Report Viewer</u></i></b></p>"));
-            builder.Append(string.Format("<p>Alternatively, you can view the data for a particular district at the <a href='https://vaccineforall.co.in/reportviewer.aspx' target='_blank'>Report Viewer</a> page</p>"));
+            builder.Append(string.Format("<p>Additionally, you can view the data for a particular district at the <a href='https://vaccineforall.co.in/reportviewer.aspx' target='_blank'>Report Viewer</a> page</p>"));
+            builder.Append(string.Format("<p>Best regards.</p>"));
+            builder.Append(string.Format("<p><b>VaccineForAll Team</b></p>"));
+
+            SendMail(citizenEmail, emailSubject, builder.ToString());
+        }
+
+        public static void SendNoDataFoundYet(String citizenEmail, String emailSubject, String district_Name, int citizenAge, String citizenDoseChoice)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(string.Format("<p>Hello {0},</p>", citizenEmail));
+            builder.Append(string.Format("<p>The program has not yet found any data for the following critera - [District Name: {0} - Age: {1} - Dose: {2}].</p>", district_Name, citizenAge, citizenDoseChoice));
+            builder.Append(string.Format("<p>The program runs in an intervals and once the available slots are found, we will inform you accordingly</p>"));
+            builder.Append(string.Format("<p>Additionally, you can view the data for a particular district at the <a href='https://vaccineforall.co.in/reportviewer.aspx' target='_blank'>Report Viewer</a> page</p>"));
             builder.Append(string.Format("<p>Best regards.</p>"));
             builder.Append(string.Format("<p><b>VaccineForAll</b></p>"));
 
@@ -64,6 +66,46 @@ namespace VaccineForAll.Libraries
                     UseDefaultCredentials = false,
                     EnableSsl = true,
                     Credentials = new NetworkCredential(Credentials.MailUserName, Credentials.MailPassword),
+                };
+                client.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("VaccineForAll Exception: " + ex.Message + ex.StackTrace);
+            }
+            return true;
+        }
+
+        public static void SendTeamUpdatesMail(String citizenEmail, String emailSubject)
+        {
+            var istDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
+            StringBuilder builder = new StringBuilder();
+            builder.Append(string.Format("<p>Hello {0},</p>", citizenEmail));
+            builder.Append(string.Format("<p>Good news! Vaccines are back!!!"));
+            builder.Append(string.Format("<p>Therefore this is to inform you that we are changing the frequency of the program to run every <b>2 hours</b> from 6 AM to 8 PM effective {0}.", istDateTime.AddDays(1).ToString("dddd, dd MMMM yyyy")));
+            builder.Append(string.Format("<p>Additionally, you can view the data for a particular district at the <a href='https://vaccineforall.co.in/reportviewer.aspx' target='_blank'>Report Viewer</a> page</p>"));
+            builder.Append(string.Format("<p>Thanks for being with us and Stay Safe!</ p>"));
+            builder.Append(string.Format("<p>Best regards.</p>"));
+            builder.Append(string.Format("<p><b>VaccineForAll Team</b></p>"));
+            SendTeamMail(citizenEmail, emailSubject, builder.ToString());
+        }
+
+        public static bool SendTeamMail(String emailAddress, String emailSubject, String emailBody)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(Credentials.MailTeamUserName);
+                mail.To.Add(emailAddress);
+                mail.Subject = emailSubject;
+                mail.Body = emailBody;
+                mail.IsBodyHtml = true;
+
+                var client = new SmtpClient(Credentials.MailSmtp, Credentials.MailPort)
+                {
+                    UseDefaultCredentials = false,
+                    EnableSsl = true,
+                    Credentials = new NetworkCredential(Credentials.MailTeamUserName, Credentials.MailTeamPassword),
                 };
                 client.Send(mail);
             }
@@ -114,49 +156,6 @@ namespace VaccineForAll.Libraries
             }
 
             return builder.ToString();
-        }
-
-        public static string GetHtml(DataTable table)
-        {
-            string messageBody = "<font>The following are the records: </font><br><br>";
-
-            try
-            {
-
-                string htmlTableStart = "<table style=\"border-collapse:collapse; text-align:center;\" >";
-                string htmlTableEnd = "</table>";
-                string htmlHeaderRowStart = "<tr style =\"background-color:#6FA1D2; color:#ffffff;\">";
-                string htmlHeaderRowEnd = "</tr>";
-                string htmlTrStart = "<tr style =\"color:#555555;\">";
-                string htmlTrEnd = "</tr>";
-                string htmlTdStart = "<td style=\" border-color:#5c87b2; border-style:solid; border-width:thin; padding: 5px;\">";
-                string htmlTdEnd = "</td>";
-
-                messageBody += htmlTableStart;
-                messageBody += htmlHeaderRowStart;
-                messageBody += htmlTdStart + "Column1 " + htmlTdEnd;
-                messageBody += htmlHeaderRowEnd;
-
-                foreach (DataRow Row in table.Rows)
-                {
-                    messageBody = messageBody + htmlTrStart;
-                    messageBody = messageBody + htmlTdStart + Row["Your Email"] + htmlTdEnd;
-                    messageBody = messageBody + htmlTrEnd;
-
-                    messageBody = messageBody + htmlTrStart;
-                    messageBody = messageBody + htmlTdStart + Row["Your District Name"] + htmlTdEnd;
-                    messageBody = messageBody + htmlTrEnd;
-                }
-                messageBody = messageBody + htmlTableEnd;
-
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
-            }
-
-            return messageBody;
-
         }
     }
 }

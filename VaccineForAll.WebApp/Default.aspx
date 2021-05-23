@@ -7,18 +7,19 @@
     <title>Vaccine for All</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=0, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria.">
+    <meta name="description" content="This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost.">
     <meta name="viewport" content="width=devfe-width, initial-scale=1">
     <link rel="canonical" href="https://vaccineforall.co.in/" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="VaccineForAll" />
-    <meta property="og:description" content="This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria." />
+    <meta property="og:description" content="This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost." />
     <meta property="og:url" content="https://vaccineforall.co.in/" />
     <meta property="og:site_name" content="VaccineForAll" />
     <meta property="og:image" itemprop="image" content="/images/vaccine.jpg">
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:description" content="This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria." data-react-helmet="true" />
+    <meta name="twitter:description" content="This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost." data-react-helmet="true" />
     <meta name="twitter:title" content="VaccineForAll" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
@@ -43,7 +44,7 @@
 
         function HideLabel() {
             document.getElementById("email").value = "";
-            var seconds = 7;
+            var seconds = 21;
             setTimeout(function () {
                 document.getElementById("<%=lblMessage.ClientID %>").style.display = "none";
             }, seconds * 1000);
@@ -69,7 +70,7 @@
         <div id="body">
             <div id="tagline">
                 <h1>Let's get vaccinated!</h1>
-                <p>This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria.</p>
+                <p>This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district.</p>
                 <br />
                 <div>
                     <select id="locality-dropdown" name="locality" onchange="FillDistricts()">
@@ -87,7 +88,7 @@
                         <option value="dose2">Dose 2</option>
                         <option value="both">Both</option>
                     </select>
-                    <input type="email" id="email" name="email" placeholder="Your email.." required="required" runat="server" />
+                    <input type="email" id="email" name="email" placeholder="Your email" required="required" runat="server" />
                     <input type="submit" id="btnSubmit" value="Submit" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSubmit_ServerClick" />
                     <input type="hidden" id="selectedStateID" runat="server" />
                     <input type="hidden" id="selectedDistrictName" runat="server" />

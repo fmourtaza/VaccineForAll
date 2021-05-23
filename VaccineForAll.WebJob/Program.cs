@@ -23,6 +23,11 @@ namespace VaccineForAll.WebJob
             //curl -X GET "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=512&date=31-03-2021" -H "accept: application/json" -H "Accept-Language: hi_IN"
             //string appointments = WebApi.Get("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=363&date=15-05-2021");
 
+            //SendTeamUpdates if required to all Citizens
+            //VaccineSlot.SendTeamUpdates(Credentials.MailSubjectTeamUpdates);
+            //Console.ReadLine();
+
+            //Main
             Console.WriteLine(" ***** VaccineForAll.WebJob - Start *****");
             VaccineSlot vaccineSlot = new VaccineSlot();
             vaccineSlot.LookupAvailableSlots();

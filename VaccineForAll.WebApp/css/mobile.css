@@ -143,6 +143,7 @@
 		float: none;
 		margin: 0 auto;
 		width: 70%;
+		display: none;
 	}
 	#body > h2 {
 		padding: 0 20px 30px;

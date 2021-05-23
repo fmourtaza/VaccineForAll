@@ -10,8 +10,6 @@ namespace VaccineForAll.Libraries
 {
     public class OperationsCRUD
     {
-        public static int mailSentCount = 70;
-
         public static SqlConnection GetSqlConnection()
         {
             try
@@ -156,7 +154,7 @@ namespace VaccineForAll.Libraries
             String query = @"SELECT * FROM [dbo].[CitizenData] WHERE [CitizenConfirmedSlotMailSentCount] < @MailSentCount ORDER BY [DateInserted] ASC";
 
             SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@MailSentCount", mailSentCount);
+            cmd.Parameters.AddWithValue("@MailSentCount", Credentials.MailSentCount);
 
             try
             {
@@ -265,6 +263,7 @@ namespace VaccineForAll.Libraries
                     {
                         citizenDailyMailSentCount = Convert.ToInt32(reader["CitizenDailyMailSentCount"]);
                     }
+
                 }
             }
             catch (Exception ex)
@@ -277,7 +276,64 @@ namespace VaccineForAll.Libraries
             }
             #endregion
 
-            return 0;
+            #region //Reset the count
+            try
+            {
+
+                connection = GetSqlConnection();
+                String queryUpdate = @"UPDATE [dbo].[CitizenData] 
+                                             SET  [CitizenDailyMailSentCount] = @CitizenDailyMailSentCount
+                                            WHERE [CitizenEmail] = @CitizenEmail";
+                SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
+                cmdUpdate.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
+                cmdUpdate.Parameters.AddWithValue("@CitizenDailyMailSentCount", 0);
+                connection.Open();
+                return cmdUpdate.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Utilities.HandleException(ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
+
+            return citizenDailyMailSentCount;
         }
+
+        public static int ResetNoDailyMailSentCount(String citizenEmail)
+        {
+            SqlConnection connection = null;
+            int citizenDailyMailSentCount = 0;
+
+            #region //Reset the count
+            try
+            {
+
+                connection = GetSqlConnection();
+                String queryUpdate = @"UPDATE [dbo].[CitizenData] 
+                                             SET  [CitizenDailyMailSentCount] = @CitizenDailyMailSentCount
+                                            WHERE [CitizenEmail] = @CitizenEmail";
+                SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
+                cmdUpdate.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
+                cmdUpdate.Parameters.AddWithValue("@CitizenDailyMailSentCount", 0);
+                connection.Open();
+                return cmdUpdate.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Utilities.HandleException(ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
+
+            return citizenDailyMailSentCount;
+        }
+
     }
 }

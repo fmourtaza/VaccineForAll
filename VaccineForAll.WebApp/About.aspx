@@ -4,9 +4,32 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <title>Vaccine for All</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=0, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Vaccine for All</title>
+    <meta name="description" content="This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost.">
+    <meta name="viewport" content="width=devfe-width, initial-scale=1">
+    <link rel="canonical" href="https://vaccineforall.co.in/" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="VaccineForAll" />
+    <meta property="og:description" content="This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost." />
+    <meta property="og:url" content="https://vaccineforall.co.in/" />
+    <meta property="og:site_name" content="VaccineForAll" />
+    <meta property="og:image" itemprop="image" content="/images/vaccine.jpg">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content="This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost." data-react-helmet="true" />
+    <meta name="twitter:title" content="VaccineForAll" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="robots" content="NOODP">
+    <meta name="theme-color" content="#eeeeee">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="VaccineForAll">
+    <meta name="google" content="notranslate">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/mobile.css">
     <script type='text/javascript' src='js/mobile.js'></script>
@@ -32,11 +55,13 @@
             <div class="content">
                 <div>
                     <h3>Let's get vaccinated!</h3>
-                    <p>This web application looks for the vaccine slot availability in your respective District by selecting the age & available dose criteria - using the Co-WIN Public APIs, for more details about the API, <a href="https://apisetu.gov.in/public/marketplace/api/cowin" target="_blank">click here</a></p>
+                    <p>This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost.</p>
+                    <br />
+                    <p>«<b><i>We believe that it is everyone's social responsibility to keep each other safe! </i></b>»</p>
                     <br />
                     <p>Please note that this web application <b>does NOT book any slot on your behalf whatsoever </b>- it only provides valuable information to help the citizen to select the available center at that point in time.</p>
                     <h3>How it works</h3>
-                    <p>The program run in an interval to query the provided Co-WIN Public APIs to look for an available center in your respective District, taking into consideration the age and available dose. </p>
+                    <p>The program run in an interval from 6 AM to 8 PM to query the provided Co-WIN Public APIs to look for an available center in your respective District, taking into consideration the age and available dose, for more details about the API, <a href='https://apisetu.gov.in/public/marketplace/api/cowin' target='_blank'>click here.</a></p>
                     <br />
                     <p>Once the program finds an available center, an email will be sent at the registered email address a complete report with all details which shows all the available centers along with the available dose at that point in time. </p>
                     <br />

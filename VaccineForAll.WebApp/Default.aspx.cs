@@ -24,7 +24,7 @@ namespace VaccineForAll.WebApp
             String citizenDoseChoice = selectedDose.Value;
             Citizen citizen = new Citizen(citizenEmail, citizendistrictID, citizendistrictName, citizenAge, citizenDoseChoice);
             int newID = OperationsCRUD.CreateRecord(citizen);
-            Utilities.SendWelcomeMail(citizenEmail, "VaccineForAll - Let us get vaccinated!");
+            Utilities.SendWelcomeMail(citizenEmail, Credentials.MailSubject);
             ShowSuccessMessage();
         }
 
