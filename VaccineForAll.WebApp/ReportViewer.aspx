@@ -56,7 +56,6 @@
         };
 
         function ShowMessageOnSubmit() {
-            alert("Form has been submitted successfully. You shall get a Welcome Mail soon !");
             HideLabel();
         }
 
@@ -104,6 +103,9 @@
                     <a href="ReportViewer.aspx">Report Viewer</a>
                 </li>
                 <li>
+                    <a href="Unsubscribe.aspx">Unsubscribe</a>
+                </li>
+                <li>
                     <a href="About.aspx">About</a>
                 </li>
             </ul>
@@ -133,11 +135,32 @@
                         <option value="doseBoth">Both</option>
                     </select>
                     <input type="email" id="email" name="email" placeholder="Your email" runat="server" style="display: none;" />
-                    <input type="submit" id="btnSearch" value="Search" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSearch_ServerClick" />
-                    <input type="submit" id="btnReset" value="Reset" runat="server" onclick="ResetControlValues(); return false;" />
-                    <input type="submit" id="btnSubmit" value="Submit" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSubmit_ServerClick" style="display: none;" />
-                    <br />
-                    <br />
+
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="ServerClick" />
+                            <asp:AsyncPostBackTrigger ControlID="btnSubmit" EventName="ServerClick" />
+                            <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="Sorting" />
+                            <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="PreRender" />
+                        </Triggers>
+                        <ContentTemplate>
+                            <input type="submit" id="btnSearch" value="Search" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSearch_ServerClick" />
+                            <input type="submit" id="btnReset" value="Reset" runat="server" onclick="ResetControlValues(); return false;" />
+                            <input type="submit" id="btnSubmit" value="Submit" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSubmit_ServerClick" style="display: none;" />
+                            <br />
+                            <br />
+                            <div class="alert alert-success" style="float: left">
+                                <asp:Label ID="lblMessage" ForeColor="Green" Font-Bold="true" Text="" runat="server" />
+                                <br />
+                                <br />
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                    <asp:UpdateProgress ID="UP1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                        <ProgressTemplate>
+                            <img src="images/progress6.gif" alt="Loading..." />
+                        </ProgressTemplate>
+                    </asp:UpdateProgress>
                     <div style="margin-top: 10px; margin-bottom: 20px;">
                         <label id="lblSaveSelection" for="chkSaveSelection" style="display: none; float: left">Save this selection to get updates on your email?    </label>
                         <input type="checkbox" name="chkSaveSelection" id="chkSaveSelection" onchange="ShowSaveSelectionControls();" style="display: none;" />
@@ -153,17 +176,10 @@
             <img src="images/indian-flag.jpg" alt="Indian Flag" class="figure" />
             <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="ServerClick" />
-                    <asp:AsyncPostBackTrigger ControlID="btnSubmit" EventName="ServerClick" />
                     <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="Sorting" />
                     <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="PreRender" />
                 </Triggers>
                 <ContentTemplate>
-                    <div class="alert alert-success" style="float: left">
-                        <asp:Label ID="lblMessage" ForeColor="Green" Font-Bold="true" Text="" runat="server" />
-                        <br />
-                        <br />
-                    </div>
                     <asp:GridView ID="GridView1" CssClass="footable" runat="server" AutoGenerateColumns="false" AllowSorting="true"
                         OnSorting="GridView1_Sorting" OnPreRender="GridView1_PreRender">
                         <Columns>

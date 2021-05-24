@@ -63,6 +63,9 @@
                     <a href="ReportViewer.aspx">Report Viewer</a>
                 </li>
                 <li>
+                    <a href="Unsubscribe.aspx">Unsubscribe</a>
+                </li>
+                <li>
                     <a href="About.aspx">About</a>
                 </li>
             </ul>
@@ -70,6 +73,10 @@
         <div id="body">
             <div id="tagline">
                 <h1>Let's get vaccinated!</h1>
+                <%--<div style="background: url(../images/bg-separator.png) no-repeat center bottom; padding: 0 0 55px;">
+                    <p>This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district.</p>
+                </div>
+                <p style="color: red;">We regret to inform you that we are not taking any new request as of now due to the increasing demand. Please try after 24h.</p>--%>
                 <p>This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district.</p>
                 <br />
                 <div>

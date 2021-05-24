@@ -127,6 +127,7 @@
     <Content Include="images\instructor3.jpg" />
     <Content Include="images\instructor4.jpg" />
     <Content Include="images\lady-in-yoga.jpg" />
+    <Content Include="images\loader.gif" />
     <Content Include="images\lying-yoga.jpg" />
     <Content Include="images\lying-yoga2.jpg" />
     <Content Include="images\mobile\bg-mobile.png" />
@@ -134,6 +135,12 @@
     <Content Include="images\mobile\mobile-collapse.png" />
     <Content Include="images\mobile\mobile-expand.png" />
     <Content Include="images\mobile\mobile-menu.png" />
+    <Content Include="images\progress3.gif" />
+    <Content Include="images\progress.gif" />
+    <Content Include="images\progress2.gif" />
+    <Content Include="images\progress4.gif" />
+    <Content Include="images\progress5.gif" />
+    <Content Include="images\progress6.gif" />
     <Content Include="images\vaccine.jpg" />
     <Content Include="images\yoga-concentrating.jpg" />
     <Content Include="js\function.js" />
@@ -141,6 +148,7 @@
     <Content Include="js\Metadata.js" />
     <Content Include="js\mobile.js" />
     <Content Include="ReportViewer.aspx" />
+    <Content Include="Unsubscribe.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +173,13 @@
     </Compile>
     <Compile Include="ReportViewer.aspx.designer.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Unsubscribe.aspx.cs">
+      <DependentUpon>Unsubscribe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Unsubscribe.aspx.designer.cs">
+      <DependentUpon>Unsubscribe.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

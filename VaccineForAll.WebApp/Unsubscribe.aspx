@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="About.aspx.cs" Inherits="VaccineForAll.WebApp.About" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Unsubscribe.aspx.cs" Inherits="VaccineForAll.WebApp.Unsubscribe" %>
 
 <!DOCTYPE html>
 
@@ -33,6 +33,23 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/mobile.css">
     <script type='text/javascript' src='js/mobile.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function ShowMessage() {
+            document.getElementById("email").value = "";
+            alert("You have been  removed successfully from the mailing list.\nThanks for being with us and Stay Safe!");
+        }
+
+        function HideLabel() {
+            document.getElementById("email").value = "";
+            var seconds = 21;
+            setTimeout(function () {
+                document.getElementById("<%=lblMessage.ClientID %>").style.display = "none";
+            }, seconds * 1000);
+        };
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -45,37 +62,35 @@
                 <li>
                     <a href="ReportViewer.aspx">Report Viewer</a>
                 </li>
-                <li>
+                <li class="current">
                     <a href="Unsubscribe.aspx">Unsubscribe</a>
                 </li>
-                <li class="current">
+                <li>
                     <a href="About.aspx">About</a>
                 </li>
             </ul>
         </div>
         <div id="body">
-            <h2>About</h2>
-            <div class="content">
-                <div>
-                    <h3>Let's get vaccinated!</h3>
-                    <p>This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district, and for your information, the use of this application is free of cost.</p>
-                    <br />
-                    <p>«<b><i>We believe that it is everyone's social responsibility to keep each other safe! </i></b>»</p>
-                    <br />
-                    <p>Please note that this web application <b>does NOT book any slot on your behalf whatsoever </b>- it only provides valuable information to help the citizen to select the available center at that point in time.</p>
-                    <h3>How it works</h3>
-                    <p>The program run in an interval from 6 AM to 8 PM to query the provided Co-WIN Public APIs to look for an available center in your respective District, taking into consideration the age and available dose, for more details about the API, <a href='https://apisetu.gov.in/public/marketplace/api/cowin' target='_blank'>click here.</a></p>
-                    <br />
-                    <p>Once the program finds an available center, an email will be sent at the registered email address a complete report with all details which shows all the available centers along with the available dose at that point in time. </p>
-                    <br />
-                    <p>It is important to mention that upon receiving the report, it is highly recommended to book the slots on the <a href="https://www.cowin.gov.in/home" target="_blank">cowin.gov.in</a> website or using the Aarogya Setu mobile app.</p>
-                    <h3>How it all started</h3>
-                    <p>Getting the vaccine is not an easy task - either you go to a vaccination center early to get a token or if lucky try to get an available slot in the Cowin site/Aarogya Setu mobile app - this has been the same experience got by friends, relatives, and colleagues across the country.</p>
-                    <br />
-                    <p>Therefore using the Co-WIN Public APIs, I decided to provide this web application to help all my fellow citizens to get vaccinated!</p>
+            <div id="tagline">
+                <h1>Let's get vaccinated!</h1>
+                <div style="background: url(../images/bg-separator.png) no-repeat center bottom; padding: 0 0 55px;">
+                    <p>This application's ultimate goal is to provide valuable information which helps fellow citizens to get vaccinated in their respective district.</p>
                 </div>
-                <img src="images/indian-flag.jpg" alt="Indian Flag" class="figure" />
+                <p>Unsubscribe with one click</p>
+                <br />
+                <div>
+                    <input type="email" id="email" name="email" placeholder="Enter your registered email" required="required" runat="server" />
+                    <input type="submit" id="btnSubmit" value="Submit" runat="server" onserverclick="btnSubmit_ServerClick" />
+                    <br />
+                    <br />
+                    <div class="alert alert-success">
+                        <asp:Label ID="lblMessage" ForeColor="Green" Font-Bold="true" Text="You have been  removed successfully from the mailing list.<br>Thanks for being with us and Stay Safe!" runat="server" Visible="false" />
+                    </div>
+                    <br />
+                    <br />
+                </div>
             </div>
+            <img src="images/indian-flag.jpg" alt="Indian Flag" class="figure" />
         </div>
         <div id="footer">
             <div>

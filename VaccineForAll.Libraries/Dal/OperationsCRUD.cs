@@ -120,6 +120,9 @@ namespace VaccineForAll.Libraries
                                     ,[CitizenDistrictName] = @CitizenDistrictName
                                     ,[CitizenAge] = @CitizenAge
                                     ,[CitizenDoseChoice] = @CitizenDoseChoice
+                                    ,[CitizenDailyMailSentCount] = 0
+                                    ,[HasProcessed] = 0
+                                    ,[HasUnsubscribed] = 0
                                WHERE [CitizenEmail] = @CitizenEmail";
 
             SqlCommand cmd = new SqlCommand(query, connection);
@@ -151,7 +154,9 @@ namespace VaccineForAll.Libraries
         public static DataTable ReadData()
         {
             SqlConnection connection = GetSqlConnection();
-            String query = @"SELECT * FROM [dbo].[CitizenData] WHERE [CitizenConfirmedSlotMailSentCount] < @MailSentCount ORDER BY [DateInserted] ASC";
+            String query = @"SELECT TOP (30) * FROM [dbo].[CitizenData] 
+                                               WHERE ([CitizenConfirmedSlotMailSentCount] < @MailSentCount AND [HasProcessed] = 0 AND [HasUnsubscribed] = 0)
+                                               ORDER BY [DateInserted] ASC";
 
             SqlCommand cmd = new SqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@MailSentCount", Credentials.MailSentCount);
@@ -180,24 +185,21 @@ namespace VaccineForAll.Libraries
         {
             SqlConnection connection = null;
             int citizenConfirmedSlotMailSentCount = 0;
-            int citizenDailyMailSentCount = 0;
 
             #region //Get last count
             try
             {
                 connection = GetSqlConnection();
-                String query = @"SELECT [CitizenConfirmedSlotMailSentCount],[CitizenDailyMailSentCount] FROM [dbo].[CitizenData] WHERE([CitizenEmail] = @CitizenEmail)";
+                String query = @"SELECT [CitizenConfirmedSlotMailSentCount] FROM [dbo].[CitizenData] WHERE([CitizenEmail] = @CitizenEmail)";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
                 connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
-
                     while (reader.Read())
                     {
                         citizenConfirmedSlotMailSentCount = Convert.ToInt32(reader["CitizenConfirmedSlotMailSentCount"]);
-                        citizenDailyMailSentCount = Convert.ToInt32(reader["CitizenDailyMailSentCount"]);
                     }
                 }
             }
@@ -217,15 +219,12 @@ namespace VaccineForAll.Libraries
 
                 connection = GetSqlConnection();
                 String queryUpdate = @"UPDATE [dbo].[CitizenData] 
-                                             SET  [CitizenConfirmedSlotMailSentCount] = @CitizenConfirmedSlotMailSentCount,
-                                                  [CitizenDailyMailSentCount] = @CitizenDailyMailSentCount
+                                             SET  [CitizenConfirmedSlotMailSentCount] = @CitizenConfirmedSlotMailSentCount
                                             WHERE [CitizenEmail] = @CitizenEmail";
                 citizenConfirmedSlotMailSentCount = citizenConfirmedSlotMailSentCount + 1;
-                citizenDailyMailSentCount = citizenDailyMailSentCount + 1;
                 SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
                 cmdUpdate.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
                 cmdUpdate.Parameters.AddWithValue("@CitizenConfirmedSlotMailSentCount", citizenConfirmedSlotMailSentCount);
-                cmdUpdate.Parameters.AddWithValue("@CitizenDailyMailSentCount", citizenDailyMailSentCount);
                 connection.Open();
                 return cmdUpdate.ExecuteNonQuery();
             }
@@ -276,7 +275,7 @@ namespace VaccineForAll.Libraries
             }
             #endregion
 
-            #region //Reset the count
+            #region //Thereafter Reset the count
             try
             {
 
@@ -303,12 +302,10 @@ namespace VaccineForAll.Libraries
             return citizenDailyMailSentCount;
         }
 
-        public static int ResetNoDailyMailSentCount(String citizenEmail)
+        public static int SetNoDailyMailSentCount(String citizenEmail)
         {
             SqlConnection connection = null;
-            int citizenDailyMailSentCount = 0;
 
-            #region //Reset the count
             try
             {
 
@@ -330,9 +327,114 @@ namespace VaccineForAll.Libraries
             {
                 connection.Close();
             }
-            #endregion
 
-            return citizenDailyMailSentCount;
+            return 0;
+        }
+
+        public static int MarkedProcessed(String citizenEmail)
+        {
+            SqlConnection connection = null;
+
+            try
+            {
+
+                connection = GetSqlConnection();
+                String queryUpdate = @"UPDATE [dbo].[CitizenData] 
+                                             SET  [HasProcessed] = @HasProcessed
+                                            WHERE [CitizenEmail] = @CitizenEmail";
+                SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
+                cmdUpdate.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
+                cmdUpdate.Parameters.AddWithValue("@HasProcessed", 1);
+                connection.Open();
+                return cmdUpdate.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Utilities.HandleException(ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return 0;
+        }
+
+        public static int DeleteMail(String citizenEmail)
+        {
+            SqlConnection connection = null;
+
+            try
+            {
+                connection = GetSqlConnection();
+                String queryUpdate = @"DELETE FROM [dbo].[CitizenData] WHERE [CitizenEmail] = @CitizenEmail";
+                SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
+                cmdUpdate.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
+                connection.Open();
+                return cmdUpdate.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Utilities.HandleException(ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return 0;
+        }
+
+        public static int Unsubscribe(String citizenEmail)
+        {
+            SqlConnection connection = null;
+
+            try
+            {
+                connection = GetSqlConnection();
+                String queryUpdate = @"UPDATE [dbo].[CitizenData] 
+                                             SET  [HasUnsubscribed] = @HasUnsubscribed
+                                            WHERE [CitizenEmail] = @CitizenEmail";
+                SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
+                cmdUpdate.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
+                cmdUpdate.Parameters.AddWithValue("@HasUnsubscribed", 1);
+                connection.Open();
+                return cmdUpdate.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Utilities.HandleException(ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return 0;
+        }
+
+        public static int MaintenanceResetHasProcessed()
+        {
+            SqlConnection connection = null;
+
+            try
+            {
+                connection = GetSqlConnection();
+                String queryUpdate = @"UPDATE [dbo].[CitizenData] SET [HasProcessed] = 0";
+                SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
+                connection.Open();
+                return cmdUpdate.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Utilities.HandleException(ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return 0;
         }
 
     }

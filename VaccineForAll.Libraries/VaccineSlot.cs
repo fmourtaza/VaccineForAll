@@ -23,6 +23,8 @@ namespace VaccineForAll.Libraries
                 DataTable sourceTable = OperationsCRUD.ReadData();
                 if (sourceTable != null)
                 {
+                    Console.WriteLine(string.Format("Total rows count: {0}", sourceTable.Rows.Count));
+
                     //Process for each Citizen
                     foreach (DataRow row in sourceTable.Rows)
                     {
@@ -42,14 +44,6 @@ namespace VaccineForAll.Libraries
                             //if (citizenEmail != "fmourtaza@gmail.com")
                             //    continue;
 
-                            //Reset No Daily Mail Count
-                            bool IsTimeBetween = IsTimeOfDayBetween(istDateTime, new TimeSpan(6, 0, 0), new TimeSpan(7, 0, 0));
-                            if (IsTimeBetween)
-                            {
-                                OperationsCRUD.ResetNoDailyMailSentCount(citizenEmail);
-                                Console.WriteLine(String.Format("   = No Daily Mail Count Reset for {0}.", citizenEmail));
-                            }
-
                             //Fetch data
                             DataTable appoitmentData = LookupConsecutiveDays(district_id, citizenAge, citizenDoseChoice);
                             if (appoitmentData.Rows.Count > 0)
@@ -68,19 +62,9 @@ namespace VaccineForAll.Libraries
                                 if (IsSuccess) OperationsCRUD.UpdateMailCountSent(citizenEmail);
                                 Console.WriteLine(String.Format("   = Report sent successfully."));
                             }
-                            else
-                            {
-                                //Inform Citizen on a daily basis if no data found
-                                IsTimeBetween = IsTimeOfDayBetween(istDateTime, new TimeSpan(21, 0, 0), new TimeSpan(21, 30, 0));
-                                if (IsTimeBetween)
-                                {
-                                    if (citizenDailyMailSentCount == 0)
-                                    {
-                                        Utilities.SendNoDataFoundYet(citizenEmail, Credentials.MailSubjectNoDataFoundYet, district_name, citizenAge, citizenDoseChoice);
-                                        Console.WriteLine(String.Format("   = No Daily Mail Count Report sent for {0}.", citizenEmail));
-                                    }
-                                }
-                            }
+
+                            //Marked Processed
+                            OperationsCRUD.MarkedProcessed(citizenEmail);
                         }
                         catch (Exception ex)
                         {
@@ -137,6 +121,7 @@ namespace VaccineForAll.Libraries
             try
             {
                 string requestUrl = string.Format("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id={0}&date={1}", district_id, date);
+                System.Threading.Thread.Sleep(3000);
                 WebApi webApi = new WebApi();
                 string json = webApi.GetUsingWebClient(requestUrl);
                 if (!string.IsNullOrEmpty(json))

@@ -42,6 +42,15 @@ namespace VaccineForAll.WebApp
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl email;
 
         /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
+        /// <summary>
         /// btnSearch control.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,24 @@ namespace VaccineForAll.WebApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputSubmit btnSubmit;
+
+        /// <summary>
+        /// lblMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMessage;
+
+        /// <summary>
+        /// UP1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress UP1;
 
         /// <summary>
         /// txtSearch control.
@@ -130,15 +157,6 @@ namespace VaccineForAll.WebApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel3;
-
-        /// <summary>
-        /// lblMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessage;
 
         /// <summary>
         /// GridView1 control.

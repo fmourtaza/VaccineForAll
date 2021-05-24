@@ -9,7 +9,7 @@
   //    "schedule": "0 */15 * * * *"
 
   //    Runs every 10 minutes
-"schedule": "0 */10 * * * *"
+  //    "schedule": "0 */10 * * * *"
 
   //    Runs every hour (i.e. whenever the count of minutes is 0)
   //    "schedule": "0 0 * * * *"
@@ -18,14 +18,14 @@
   //    "schedule": "0 0 */2 * * *",
 
   //    Runs every 4 hours
-  //    "schedule": "0 0 */6 * * *"
+  //    "schedule": "0 0 */4 * * *"
 
   //    Runs every hour from 9 AM to 5 PM
   //    "schedule": "0 0 9-17 * * *"
-  //     "schedule": "0 0 8-20 * * *"
+  //    "schedule": "0 0 8-20 * * *"
 
   //    Runs at 9:30 AM every day
-  //    "schedule": "0 30 9 * * *"
+  "schedule": "0 30 7 * * *"
 
   //    Runs at 9:30 AM every week day
   //    "schedule": "0 30 9 * * 1-5"

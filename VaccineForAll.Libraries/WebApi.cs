@@ -23,6 +23,7 @@ namespace VaccineForAll.Libraries
                     wc.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0";
                     wc.Headers[HttpRequestHeader.KeepAlive] = "true";
                     wc.Headers.Add("Access-Control-Allow-Origin", "http://*.vaccineforall.co.in");
+                    wc.Credentials = CredentialCache.DefaultCredentials;
                     return wc.DownloadString(url);
                 }
             }
@@ -52,6 +53,7 @@ namespace VaccineForAll.Libraries
                 request.Headers.Add("Accept-Language", "hi_IN");
                 request.Headers.Add("UserAgent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
                 request.Headers.Add("Access-Control-Allow-Origin", "http://*.vaccineforall.co.in");
+                request.UseDefaultCredentials = true;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 if (response.StatusDescription == "OK")
                 {

@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{420CAAB2-D2A2-4E80-8696-6A28C28203DB}</ProjectGuid>
+    <ProjectGuid>{AC55213B-4880-4956-917F-D98C1020C622}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>VaccineForAll.WebJob</RootNamespace>
-    <AssemblyName>VaccineForAll.WebJob</AssemblyName>
+    <RootNamespace>VaccineForAll.WebJob.Maintenance</RootNamespace>
+    <AssemblyName>VaccineForAll.WebJob.Maintenance</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,6 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -65,17 +66,15 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Properties\webjob-publish-settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="Properties\webjob-publish-settings.json" />
     <None Include="Settings.job">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VaccineForAll.Libraries\VaccineForAll.Libraries.csproj">
-      <Project>{aec9c355-8fe5-493e-902c-600be3007930}</Project>
+    <ProjectReference Include="..\..\..\..\..\..\code\VaccineForAll\VaccineForAll.Libraries\VaccineForAll.Libraries.csproj">
+      <Project>{AEC9C355-8FE5-493E-902C-600BE3007930}</Project>
       <Name>VaccineForAll.Libraries</Name>
     </ProjectReference>
   </ItemGroup>

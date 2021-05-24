@@ -31,6 +31,8 @@ namespace VaccineForAll.Libraries
             builder.Append(string.Format("<p>It is important to mention that upon receiving the report, it is highly recommended to book the slots on the <a href='https://www.cowin.gov.in/home' target='_blank'>cowin.gov.in</a> website or using the Aarogya Setu mobile app.</p>"));
             builder.Append(string.Format("<p><b><i><u>Direct Report Viewer</u></i></b></p>"));
             builder.Append(string.Format("<p>Additionally, you can view the data for a particular district at the <a href='https://vaccineforall.co.in/reportviewer.aspx' target='_blank'>Report Viewer</a> page</p>"));
+            builder.Append(string.Format("<p><b><i><u>Unsubscribe</u></i></b></p>"));
+            builder.Append(string.Format("<p>At any point of time, you can unsubscribe using the following link <a href='https://vaccineforall.co.in/unsubscribe.aspx' target='_blank'>Unsubscribe with one click</a> page</p>"));
             builder.Append(string.Format("<p>Best regards.</p>"));
             builder.Append(string.Format("<p><b>VaccineForAll Team</b></p>"));
 
@@ -48,32 +50,6 @@ namespace VaccineForAll.Libraries
             builder.Append(string.Format("<p><b>VaccineForAll</b></p>"));
 
             SendMail(citizenEmail, emailSubject, builder.ToString());
-        }
-
-        public static bool SendMail(String emailAddress, String emailSubject, String emailBody)
-        {
-            try
-            {
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress(Credentials.MailUserName);
-                mail.To.Add(emailAddress);
-                mail.Subject = emailSubject;
-                mail.Body = emailBody;
-                mail.IsBodyHtml = true;
-
-                var client = new SmtpClient(Credentials.MailSmtp, Credentials.MailPort)
-                {
-                    UseDefaultCredentials = false,
-                    EnableSsl = true,
-                    Credentials = new NetworkCredential(Credentials.MailUserName, Credentials.MailPassword),
-                };
-                client.Send(mail);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("VaccineForAll Exception: " + ex.Message + ex.StackTrace);
-            }
-            return true;
         }
 
         public static void SendTeamUpdatesMail(String citizenEmail, String emailSubject)
@@ -156,6 +132,81 @@ namespace VaccineForAll.Libraries
             }
 
             return builder.ToString();
+        }
+
+        public static bool SendMail_Gmail(String emailAddress, String emailSubject, String emailBody)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(Credentials.MailUserName);
+                mail.To.Add(emailAddress);
+                mail.Subject = emailSubject;
+                mail.Body = emailBody;
+                mail.IsBodyHtml = true;
+
+                var client = new SmtpClient(Credentials.MailSmtp, Credentials.MailPort)
+                {
+                    UseDefaultCredentials = false,
+                    EnableSsl = true,
+                    Credentials = new NetworkCredential(Credentials.MailUserName, Credentials.MailPassword),
+                };
+                client.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("VaccineForAll Exception: " + ex.Message + ex.StackTrace);
+            }
+            return true;
+        }
+
+        public static bool SendMail(String emailAddress, String emailSubject, string emailBody)
+        {
+            string[] mailAccounts = { Credentials.MailO365UserName1, Credentials.MailO365UserName2 };
+            Random rand = new Random();
+            int index = rand.Next(mailAccounts.Length);
+            string mailAccount = mailAccounts[index];
+            string mailAccountPassword = Credentials.MailO365Password;
+
+            bool IsSuccess = false;
+
+            var fromAddress = new MailAddress(mailAccount);
+            var toAddress = new MailAddress(emailAddress);
+
+            try
+            {
+                var smtp = new SmtpClient
+                {
+                    Host = Credentials.MailO365Smtp,
+                    Port = Credentials.MailO365Port,
+                    EnableSsl = true,
+                    Credentials = new NetworkCredential(mailAccount, mailAccountPassword)
+                };
+
+                using (MailMessage mail = new MailMessage())
+                {
+                    //Setting From , To and CC
+                    mail.From = new MailAddress(fromAddress.Address);
+                    mail.To.Add(new MailAddress(toAddress.Address));
+                    mail.Subject = emailSubject;
+                    mail.Body = emailBody;
+                    mail.IsBodyHtml = true;
+                    smtp.Send(mail);
+                    IsSuccess = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message + ex.StackTrace;
+                Console.WriteLine("VaccineForAll Exception: " + message);
+                if (message.Contains("Syntax error in parameters or arguments. The server response was: 5.1.6 Recipient addresses in single label domains not accepted "))
+                {
+                    OperationsCRUD.DeleteMail(emailAddress);
+                    Console.WriteLine(String.Format("   = Deleted Invalid Email: {0}.", emailAddress));
+                }
+            }
+
+            return IsSuccess;
         }
     }
 }

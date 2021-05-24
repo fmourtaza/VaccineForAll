@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaccineForAll.Libraries", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaccineForAll.WebApp", "VaccineForAll.WebApp\VaccineForAll.WebApp.csproj", "{DA4344EA-E81F-4541-8114-7C1407BFAACD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaccineForAll.WebJob.Maintenance", "VaccineForAll.WebJob.Maintenance\VaccineForAll.WebJob.Maintenance.csproj", "{AC55213B-4880-4956-917F-D98C1020C622}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DA4344EA-E81F-4541-8114-7C1407BFAACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA4344EA-E81F-4541-8114-7C1407BFAACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA4344EA-E81F-4541-8114-7C1407BFAACD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC55213B-4880-4956-917F-D98C1020C622}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC55213B-4880-4956-917F-D98C1020C622}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC55213B-4880-4956-917F-D98C1020C622}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC55213B-4880-4956-917F-D98C1020C622}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
