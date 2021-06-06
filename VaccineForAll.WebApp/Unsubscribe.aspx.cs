@@ -18,14 +18,25 @@ namespace VaccineForAll.WebApp
         protected void btnSubmit_ServerClick(object sender, EventArgs e)
         {
             int returnValue = OperationsCRUD.Unsubscribe(email.Value);
-            ShowSuccessMessage();
+            if (returnValue == 1)
+                ShowSuccessMessage();
+            else
+                ShowNotSuccessMessage();
         }
 
         private void ShowSuccessMessage()
         {
             lblMessage.Visible = true;
+            lblMessage.Text = "You have been  removed successfully from the mailing list.<br>Thanks for being with us and Stay Safe!";
             ClientScript.RegisterStartupScript(this.GetType(), "alert", "HideLabel();", true);
             ScriptManager.RegisterStartupScript(this, GetType(), "displayalertmessage", "ShowMessage();", true);
+        }
+
+        private void ShowNotSuccessMessage()
+        {
+            lblMessage.Visible = true;
+            lblMessage.Text = "Oups! We could not find any entry with this email id!";
+            ScriptManager.RegisterStartupScript(this, GetType(), "displayalertmessage", "ShowNotMessage();", true);
         }
     }
 }

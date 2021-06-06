@@ -45,9 +45,6 @@
                 <li>
                     <a href="ReportViewer.aspx">Report Viewer</a>
                 </li>
-                <li>
-                    <a href="Unsubscribe.aspx">Unsubscribe</a>
-                </li>
                 <li class="current">
                     <a href="About.aspx">About</a>
                 </li>

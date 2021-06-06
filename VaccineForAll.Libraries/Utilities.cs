@@ -31,6 +31,8 @@ namespace VaccineForAll.Libraries
             builder.Append(string.Format("<p>It is important to mention that upon receiving the report, it is highly recommended to book the slots on the <a href='https://www.cowin.gov.in/home' target='_blank'>cowin.gov.in</a> website or using the Aarogya Setu mobile app.</p>"));
             builder.Append(string.Format("<p><b><i><u>Direct Report Viewer</u></i></b></p>"));
             builder.Append(string.Format("<p>Additionally, you can view the data for a particular district at the <a href='https://vaccineforall.co.in/reportviewer.aspx' target='_blank'>Report Viewer</a> page</p>"));
+            builder.Append(string.Format("<p><b><i><u>Update your data</u></i></b></p>"));
+            builder.Append(string.Format("<p>If you wish, you can update your data using the same email id in the Home page - for example: you want to change your District or Dose, etc.</p>"));
             builder.Append(string.Format("<p><b><i><u>Unsubscribe</u></i></b></p>"));
             builder.Append(string.Format("<p>At any point of time, you can unsubscribe using the following link <a href='https://vaccineforall.co.in/unsubscribe.aspx' target='_blank'>Unsubscribe with one click</a> page</p>"));
             builder.Append(string.Format("<p>Best regards.</p>"));
@@ -64,6 +66,19 @@ namespace VaccineForAll.Libraries
             builder.Append(string.Format("<p>Best regards.</p>"));
             builder.Append(string.Format("<p><b>VaccineForAll Team</b></p>"));
             SendTeamMail(citizenEmail, emailSubject, builder.ToString());
+        }
+
+        public static void SendTeamUpdatesMailForUnsubscribe(String citizenEmail, String emailSubject)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(string.Format("<p>Hello {0},</p>", citizenEmail));
+            builder.Append(string.Format("<p>We trust this mail finds you well!"));
+            builder.Append(string.Format("<p>Once you are vaccinated or you wish to unsubscribe, then please use the following <a href='https://vaccineforall.co.in/unsubscribe.aspx' target='_blank'>Unsubscribe with one click</a> "));
+            builder.Append(string.Format("<p>This step will increase other's chance to get vaccinated."));
+            builder.Append(string.Format("<p>Thanks for being with us and Stay Safe!</ p>"));
+            builder.Append(string.Format("<p>Best regards.</p>"));
+            builder.Append(string.Format("<p><b>VaccineForAll Team</b></p>"));
+            SendMail(citizenEmail, emailSubject, builder.ToString());
         }
 
         public static bool SendTeamMail(String emailAddress, String emailSubject, String emailBody)
@@ -124,7 +139,13 @@ namespace VaccineForAll.Libraries
                     builder.Append("</tr>");
                 }
                 builder.Append("</table>");
-                builder.Append("<br><br>Regards.");
+                builder.Append("<br><br>");
+                builder.Append(string.Format("<p><b><i><u>Update your data</u></i></b></p>"));
+                builder.Append(string.Format("<p>If you wish, you can update your data using the same email id in the Home page - for example: you want to change your District or Dose, etc.</p>"));
+                builder.Append(string.Format("<p><b><i><u>Unsubscribe</u></i></b></p>"));
+                builder.Append(string.Format("<p>At any point of time, you can unsubscribe using the following link <a href='https://vaccineforall.co.in/unsubscribe.aspx' target='_blank'>Unsubscribe with one click</a> page</p>"));
+                builder.Append(string.Format("<p>Best regards.</p>"));
+                builder.Append(string.Format("<p><b>VaccineForAll Team</b></p>"));
             }
             catch (Exception ex)
             {
@@ -180,6 +201,7 @@ namespace VaccineForAll.Libraries
                     Host = Credentials.MailO365Smtp,
                     Port = Credentials.MailO365Port,
                     EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
                     Credentials = new NetworkCredential(mailAccount, mailAccountPassword)
                 };
 

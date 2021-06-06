@@ -42,6 +42,10 @@
             alert("You have been  removed successfully from the mailing list.\nThanks for being with us and Stay Safe!");
         }
 
+        function ShowNotMessage() {
+            alert("Oups! We could not find any entry with this email id!");
+        }
+
         function HideLabel() {
             document.getElementById("email").value = "";
             var seconds = 21;
@@ -84,7 +88,7 @@
                     <br />
                     <br />
                     <div class="alert alert-success">
-                        <asp:Label ID="lblMessage" ForeColor="Green" Font-Bold="true" Text="You have been  removed successfully from the mailing list.<br>Thanks for being with us and Stay Safe!" runat="server" Visible="false" />
+                        <asp:Label ID="lblMessage" ForeColor="Green" Font-Bold="true" Text="" runat="server" Visible="false" />
                     </div>
                     <br />
                     <br />

@@ -96,7 +96,7 @@ namespace VaccineForAll.WebApp
             string message = string.Format("Report generated successfully for [District: {0} - Age: {1} - Dose: {2}] at timestamp: {3}.", citizendistrictName, citizenAge, citizenDoseChoice, istDateTime.ToString("F"));
             lblMessage.Text = message;
             ScriptManager.RegisterStartupScript(UpdatePanel3, UpdatePanel3.GetType(), "Alert", "ShowSearchHideLabel();", true);
-            ShowNotification(message, UpdatePanel3);
+            //ShowNotification(message, UpdatePanel3);
         }
 
         private void ShowSuccessMessageOnSubmit()
@@ -104,7 +104,7 @@ namespace VaccineForAll.WebApp
             string message = string.Format("Form has been submitted successfully. You shall get a Welcome Mail soon !");
             lblMessage.Text = message;
             ScriptManager.RegisterStartupScript(UpdatePanel3, UpdatePanel3.GetType(), "Alert", "ShowMessageOnSubmit();", true);
-            ShowNotification(message, UpdatePanel3);
+            //ShowNotification(message, UpdatePanel3);
         }
 
         private void ShowNoDataMessage(String citizendistrictName, int citizenAge, String citizenDoseChoice)
@@ -113,10 +113,10 @@ namespace VaccineForAll.WebApp
             string message = string.Format("No data to show for [District: {0} - Age: {1} - Dose: {2}] at timestamp: {3}.", citizendistrictName, citizenAge, citizenDoseChoice, istDateTime.ToString("F"));
             lblMessage.Text = message;
             ScriptManager.RegisterStartupScript(UpdatePanel3, UpdatePanel3.GetType(), "Alert", "HideLabel();", true);
-            ShowNotification(message, UpdatePanel3);
+            //ShowNotification(message, UpdatePanel3);
         }
 
-        private void ShowNotification(string message, UpdatePanel updatePanelControl)
+        private void ShowNotification_(string message, UpdatePanel updatePanelControl)
         {
             ScriptManager.RegisterStartupScript(updatePanelControl, updatePanelControl.GetType(), "Alert100", " alert('" + message + "')", true);
         }

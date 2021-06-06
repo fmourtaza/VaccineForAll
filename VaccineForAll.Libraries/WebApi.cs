@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,5 +69,36 @@ namespace VaccineForAll.Libraries
 
             return null;
         }
+
+        public string GenerateOtp(String url, CitizenMobile citizenMobile)
+        {
+            try
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    wc.Headers[HttpRequestHeader.Accept] = "application/json";
+                    wc.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    string Json = "{\"mobile\":\"9923800952\"}";
+                    var result = wc.UploadString(url, Json);
+                    return result;
+                }
+
+                //var client = new RestClient("https://cdn-api.co-vin.in/api/v2/auth/generateMobileOTP");
+                //client.Timeout = -1;
+                //var request = new RestRequest(Method.POST);
+                //string Json = "{\"mobile\":\"9923800952\"}";
+                //request.AddParameter("text/plain", "{\r\n    \"mobile\": \"9923800952\"\"\r\n}", ParameterType.RequestBody);
+                //IRestResponse response = client.Execute(request);
+                //Console.WriteLine(response.Content);
+            }
+            catch (Exception ex)
+            {
+                //Utilities.HandleException(ex);
+            }
+
+            return null;
+        }
+
     }
+
 }

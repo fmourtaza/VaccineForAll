@@ -189,6 +189,7 @@
     <Content Include="fonts\nixieone-regular-webfont.eot" />
     <Content Include="fonts\nixieone-regular-webfont.ttf" />
     <Content Include="fonts\nixieone-regular-webfont.woff" />
+    <Content Include="libman.json" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\vaccineforall - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\vaccineforall - ReadOnly - FTP.pubxml" />

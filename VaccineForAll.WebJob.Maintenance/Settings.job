@@ -17,15 +17,19 @@
   //    Runs every 2 hours
   //    "schedule": "0 0 */2 * * *",
 
-  //    Runs every 4 hours
-  //    "schedule": "0 0 */4 * * *"
+  //    Runs every 6 hours
+  //    "schedule": "0 0 */6 * * *"
 
   //    Runs every hour from 9 AM to 5 PM
   //    "schedule": "0 0 9-17 * * *"
   //    "schedule": "0 0 8-20 * * *"
 
+  //    Runs at each interval 8,12,16,20
+  //    "schedule": "0 0 8,12,16,20 * * *"
+  "schedule": "0 0/30 12,15 * * *"
+
   //    Runs at 9:30 AM every day
-  "schedule": "0 30 7 * * *"
+  //    "schedule": "0 30 7 * * *"
 
   //    Runs at 9:30 AM every week day
   //    "schedule": "0 30 9 * * 1-5"

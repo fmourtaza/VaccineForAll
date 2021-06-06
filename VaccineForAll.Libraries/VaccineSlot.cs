@@ -128,69 +128,72 @@ namespace VaccineForAll.Libraries
                 {
                     Appointment appointment = JsonConvert.DeserializeObject<Appointment>(json);
 
-                    foreach (Center center in appointment.centers)
+                    if (appointment != null && appointment.centers != null && appointment.centers.Count > 0)
                     {
-
-                        foreach (Session session in center.sessions)
+                        foreach (Center center in appointment.centers)
                         {
-                            //Primary check: Age eligibility
-                            if (citizenAge >= session.min_age_limit)
+
+                            foreach (Session session in center.sessions)
                             {
-                                //Secondary check: available_capacity_dose1 or available_capacity_dose2
-                                switch (citizenDoseChoice)
+                                //Primary check: Age eligibility
+                                if (citizenAge >= session.min_age_limit)
                                 {
-                                    case "dose1":
-                                        if (session.available_capacity_dose1 > 0)
-                                        {
-                                            DataRow row = table.NewRow();
-                                            row["session_date"] = session.date;
-                                            row["session.min_age_limit"] = session.min_age_limit;
-                                            row["session.available_capacity_dose1"] = session.available_capacity_dose1;
-                                            row["session.available_capacity_dose2"] = "non applicable";
-                                            row["session.vaccine"] = session.vaccine;
-                                            row["center.district_name"] = center.district_name;
-                                            if (center.vaccine_fees != null && center.vaccine_fees.Count > 0)
-                                                row["center.vaccine_fees"] = center.vaccine_fees[0].fee;
-                                            row["center.address"] = center.name + Environment.NewLine + center.address;
-                                            row["center.pincode"] = center.pincode;
-                                            table.Rows.Add(row);
-                                        }
-                                        break;
-                                    case "dose2":
-                                        if (session.available_capacity_dose2 > 0)
-                                        {
-                                            DataRow row = table.NewRow();
-                                            row["session_date"] = session.date;
-                                            row["session.min_age_limit"] = session.min_age_limit;
-                                            row["session.available_capacity_dose1"] = "non applicable";
-                                            row["session.available_capacity_dose2"] = session.available_capacity_dose2;
-                                            row["session.vaccine"] = session.vaccine;
-                                            row["center.district_name"] = center.district_name;
-                                            if (center.vaccine_fees != null && center.vaccine_fees.Count > 0)
-                                                row["center.vaccine_fees"] = center.vaccine_fees[0].fee;
-                                            row["center.address"] = center.name + Environment.NewLine + center.address;
-                                            row["center.pincode"] = center.pincode;
-                                            table.Rows.Add(row);
-                                        }
-                                        break;
-                                    case "both":
-                                    default:
-                                        if (session.available_capacity_dose1 > 0 || session.available_capacity_dose2 > 0)
-                                        {
-                                            DataRow row = table.NewRow();
-                                            row["session_date"] = session.date;
-                                            row["session.min_age_limit"] = session.min_age_limit;
-                                            row["session.available_capacity_dose1"] = session.available_capacity_dose1;
-                                            row["session.available_capacity_dose2"] = session.available_capacity_dose2;
-                                            row["session.vaccine"] = session.vaccine;
-                                            row["center.district_name"] = center.district_name;
-                                            if (center.vaccine_fees != null && center.vaccine_fees.Count > 0)
-                                                row["center.vaccine_fees"] = center.vaccine_fees[0].fee;
-                                            row["center.address"] = center.name + Environment.NewLine + center.address;
-                                            row["center.pincode"] = center.pincode;
-                                            table.Rows.Add(row);
-                                        }
-                                        break;
+                                    //Secondary check: available_capacity_dose1 or available_capacity_dose2
+                                    switch (citizenDoseChoice)
+                                    {
+                                        case "dose1":
+                                            if (session.available_capacity_dose1 > 0)
+                                            {
+                                                DataRow row = table.NewRow();
+                                                row["session_date"] = session.date;
+                                                row["session.min_age_limit"] = session.min_age_limit;
+                                                row["session.available_capacity_dose1"] = session.available_capacity_dose1;
+                                                row["session.available_capacity_dose2"] = "non applicable";
+                                                row["session.vaccine"] = session.vaccine;
+                                                row["center.district_name"] = center.district_name;
+                                                if (center.vaccine_fees != null && center.vaccine_fees.Count > 0)
+                                                    row["center.vaccine_fees"] = center.vaccine_fees[0].fee;
+                                                row["center.address"] = center.name + Environment.NewLine + center.address;
+                                                row["center.pincode"] = center.pincode;
+                                                table.Rows.Add(row);
+                                            }
+                                            break;
+                                        case "dose2":
+                                            if (session.available_capacity_dose2 > 0)
+                                            {
+                                                DataRow row = table.NewRow();
+                                                row["session_date"] = session.date;
+                                                row["session.min_age_limit"] = session.min_age_limit;
+                                                row["session.available_capacity_dose1"] = "non applicable";
+                                                row["session.available_capacity_dose2"] = session.available_capacity_dose2;
+                                                row["session.vaccine"] = session.vaccine;
+                                                row["center.district_name"] = center.district_name;
+                                                if (center.vaccine_fees != null && center.vaccine_fees.Count > 0)
+                                                    row["center.vaccine_fees"] = center.vaccine_fees[0].fee;
+                                                row["center.address"] = center.name + Environment.NewLine + center.address;
+                                                row["center.pincode"] = center.pincode;
+                                                table.Rows.Add(row);
+                                            }
+                                            break;
+                                        case "both":
+                                        default:
+                                            if (session.available_capacity_dose1 > 0 || session.available_capacity_dose2 > 0)
+                                            {
+                                                DataRow row = table.NewRow();
+                                                row["session_date"] = session.date;
+                                                row["session.min_age_limit"] = session.min_age_limit;
+                                                row["session.available_capacity_dose1"] = session.available_capacity_dose1;
+                                                row["session.available_capacity_dose2"] = session.available_capacity_dose2;
+                                                row["session.vaccine"] = session.vaccine;
+                                                row["center.district_name"] = center.district_name;
+                                                if (center.vaccine_fees != null && center.vaccine_fees.Count > 0)
+                                                    row["center.vaccine_fees"] = center.vaccine_fees[0].fee;
+                                                row["center.address"] = center.name + Environment.NewLine + center.address;
+                                                row["center.pincode"] = center.pincode;
+                                                table.Rows.Add(row);
+                                            }
+                                            break;
+                                    }
                                 }
                             }
                         }
@@ -294,7 +297,8 @@ namespace VaccineForAll.Libraries
                         //if (citizenEmail != "fmourtaza@gmail.com")
                         //    continue;
 
-                        Utilities.SendTeamUpdatesMail(citizenEmail, subject);
+                        //Utilities.SendTeamUpdatesMail(citizenEmail, subject);
+                        Utilities.SendTeamUpdatesMailForUnsubscribe(citizenEmail, subject);
                     }
                 }
             }

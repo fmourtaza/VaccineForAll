@@ -63,9 +63,6 @@
                     <a href="ReportViewer.aspx">Report Viewer</a>
                 </li>
                 <li>
-                    <a href="Unsubscribe.aspx">Unsubscribe</a>
-                </li>
-                <li>
                     <a href="About.aspx">About</a>
                 </li>
             </ul>
@@ -93,7 +90,6 @@
                         <option value="">Choose Dose</option>
                         <option value="dose1">Dose 1</option>
                         <option value="dose2">Dose 2</option>
-                        <option value="both">Both</option>
                     </select>
                     <input type="email" id="email" name="email" placeholder="Your email" required="required" runat="server" />
                     <input type="submit" id="btnSubmit" value="Submit" runat="server" onclick="SetHiddenControlValue()" onserverclick="btnSubmit_ServerClick" />

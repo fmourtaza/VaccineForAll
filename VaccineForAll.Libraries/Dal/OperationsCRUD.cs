@@ -154,6 +154,7 @@ namespace VaccineForAll.Libraries
         public static DataTable ReadData()
         {
             SqlConnection connection = GetSqlConnection();
+
             String query = @"SELECT TOP (30) * FROM [dbo].[CitizenData] 
                                                WHERE ([CitizenConfirmedSlotMailSentCount] < @MailSentCount AND [HasProcessed] = 0 AND [HasUnsubscribed] = 0)
                                                ORDER BY [DateInserted] ASC";
@@ -367,11 +368,11 @@ namespace VaccineForAll.Libraries
             try
             {
                 connection = GetSqlConnection();
-                String queryUpdate = @"DELETE FROM [dbo].[CitizenData] WHERE [CitizenEmail] = @CitizenEmail";
-                SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
-                cmdUpdate.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
+                String queryDelete = @"DELETE FROM [dbo].[CitizenData] WHERE [CitizenEmail] = @CitizenEmail";
+                SqlCommand cmdDelete = new SqlCommand(queryDelete, connection);
+                cmdDelete.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
                 connection.Open();
-                return cmdUpdate.ExecuteNonQuery();
+                return cmdDelete.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
@@ -388,18 +389,42 @@ namespace VaccineForAll.Libraries
         public static int Unsubscribe(String citizenEmail)
         {
             SqlConnection connection = null;
+            string citizenDistrictName = string.Empty;
+            string citizenAge = string.Empty;
 
             try
             {
                 connection = GetSqlConnection();
-                String queryUpdate = @"UPDATE [dbo].[CitizenData] 
-                                             SET  [HasUnsubscribed] = @HasUnsubscribed
-                                            WHERE [CitizenEmail] = @CitizenEmail";
-                SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
-                cmdUpdate.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
-                cmdUpdate.Parameters.AddWithValue("@HasUnsubscribed", 1);
+                String query = @"SELECT [CitizenDistrictName], [CitizenAge] FROM [dbo].[CitizenData] WHERE [CitizenEmail] = @CitizenEmail";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
                 connection.Open();
-                return cmdUpdate.ExecuteNonQuery();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+
+                    while (reader.Read())
+                    {
+                        citizenDistrictName = Convert.ToString(reader["CitizenDistrictName"]);
+                        citizenAge = Convert.ToString(reader["CitizenAge"]);
+                    }
+                    reader.Close();
+
+                    //If data then insert
+                    String queryInsert = @"INSERT INTO [dbo].[CitizenUnsubscribe] ([CitizenEmail],[CitizenDistrictName],[CitizenAge]) VALUES (@CitizenEmail, @CitizenDistrictName, @CitizenAge)";
+                    SqlCommand cmdInsert = new SqlCommand(queryInsert, connection);
+                    cmdInsert.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
+                    cmdInsert.Parameters.AddWithValue("@CitizenDistrictName", citizenDistrictName);
+                    cmdInsert.Parameters.AddWithValue("@CitizenAge", citizenAge);
+                    SqlDataReader readerInsert = cmdInsert.ExecuteReader();
+                    readerInsert.Close();
+
+                    //Delete
+                    String queryDelete = @"DELETE FROM [dbo].[CitizenData] WHERE [CitizenEmail] = @CitizenEmail";
+                    SqlCommand cmdDelete = new SqlCommand(queryDelete, connection);
+                    cmdDelete.Parameters.AddWithValue("@CitizenEmail", citizenEmail);
+                    return cmdDelete.ExecuteNonQuery();
+                }
             }
             catch (Exception ex)
             {
